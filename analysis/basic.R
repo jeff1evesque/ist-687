@@ -10,7 +10,8 @@ cwd <- dirname(dirname(rstudioapi::getSourceEditorContext()$path))
 setwd(cwd)
 
 ## utility functions
-library('utility', lib.loc = paste(cwd, sep='', '/packages'))
+devtools::install_local(paste(cwd, sep='', '/packages/ist687utility'))
+library('ist687utility')
 
 ## dataset directory
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
