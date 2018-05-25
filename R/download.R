@@ -10,6 +10,5 @@ download <- function(sourefile, destfile) {
         ),
         error=function(e) 1
     )
-    load(destfile) 
   }
 }
