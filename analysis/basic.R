@@ -16,9 +16,6 @@ library('ist687utility')
 ## load packages
 load_package('reshape2')
 
-## local variables
-reshaped_page <- c('name', 'project', 'access', 'agent')
-
 ## dataset directory
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
 
