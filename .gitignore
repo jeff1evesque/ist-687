@@ -1,2 +1,4 @@
 # ignore files + directories
 dataset/
+.Rproj.user
+.Rhistory
