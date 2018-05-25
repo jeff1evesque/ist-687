@@ -1,7 +1,7 @@
 ##
-## download.R, download provided 'sourcefile' to 'destfile'.
+## download_source.R, download provided 'sourcefile' to 'destfile'.
 ##
-download <- function(sourefile, destfile) {
+download_source <- function(sourcefile, destfile) {
   if(!file.exists(destfile)) {
     res <- tryCatch(
         download.file(
