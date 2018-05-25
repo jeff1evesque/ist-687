@@ -39,6 +39,6 @@ df1 <- cbind(
     df1[,-which(names(df1) == "Page")]
 )
 df2 <- cbind(
-  colsplit(df1$Page, '_', c('name', 'project', 'access', 'agent')),
+  colsplit(df2$Page, '_', c('name', 'project', 'access', 'agent')),
   df2[,-which(names(df2) == "Page")]
 )
