@@ -16,6 +16,9 @@ library('ist687utility')
 ## load packages
 load_package('reshape2')
 
+## local variables
+reshaped_page <- c('name', 'project', 'access', 'agent')
+
 ## dataset directory
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
 
@@ -35,10 +38,10 @@ df2 <- load_df('./dataset/train_2.csv')
 
 ## explode column: first column (i.e. 'Page') will become four columns
 df1 <- cbind(
-    colsplit(df1$Page, '_', c('name', 'project', 'access', 'agent')),
+    colsplit(df1$Page, '_', reshaped_page),
     df1[,-which(names(df1) == "Page")]
 )
 df2 <- cbind(
-  colsplit(df2$Page, '_', c('name', 'project', 'access', 'agent')),
+  colsplit(df2$Page, '_', reshaped_page),
   df2[,-which(names(df2) == "Page")]
 )
