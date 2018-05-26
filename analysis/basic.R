@@ -45,11 +45,11 @@ df2 <- cbind(
 
 ## explode column: second column into Article, and Language columns
 df1 <- cbind(
-  colsplit(df1$first, pattern=perl('_(?=[^_]+$)'), c('Article', 'Language')),
+  colsplit(df1$first, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
   df1[,-which(names(df1) == 'first')]
 )
 df2 <- cbind(
-  colsplit(df2$first, pattern=perl('_(?=[^_]+$)'), c('Article', 'Language')),
+  colsplit(df2$first, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
   df2[,-which(names(df2) == 'first')]
 )
 
