@@ -16,6 +16,9 @@ library('ist687utility')
 ## load packages
 load_package('reshape2')
 
+## local variables
+domain_regex <- '_www\.wikimedia\.org_|\.mediawiki\.org_|\.wikipedia\.org_'
+
 ## dataset directory
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
 
@@ -35,11 +38,11 @@ df2 <- load_df('./dataset/train_2.csv')
 
 ## explode column: Page column into two general columns
 df1 <- cbind(
-  colsplit(df1$Page, '.wikipedia.org_', c('First', 'Second')),
+  colsplit(df1$Page, pattern=regex(domain_regex), c('First', 'Second')),
   df1[,-which(names(df1) == 'Page')]
 )
 df2 <- cbind(
-  colsplit(df2$Page, '.wikipedia.org_', c('First', 'Second')),
+  colsplit(df2$Page, pattern=regex(domain_regex), c('First', 'Second')),
   df2[,-which(names(df2) == 'Page')]
 )
 
