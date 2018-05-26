@@ -17,7 +17,7 @@ library('ist687utility')
 load_package('reshape2')
 
 ## local variables
-domain_regex <- '_www\\.wikimedia\\.org_|\\.mediawiki\\.org_|\\.wikipedia\\.org_'
+domain_regex <- '_www\\.wikimedia\\.org_|\\.wikimedia\\.org_|\\.mediawiki\\.org_|\\.wikipedia\\.org_'
 
 ## dataset directory
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
