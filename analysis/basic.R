@@ -33,32 +33,32 @@ download_source(
 df1 <- load_df('./dataset/train_1.csv')
 df2 <- load_df('./dataset/train_2.csv')
 
-## explode column: first column into two general columns
+## explode column: Page column into two general columns
 df1 <- cbind(
-  colsplit(df1$Page, '.wikipedia.org_', c('first', 'second')),
+  colsplit(df1$Page, '.wikipedia.org_', c('First', 'Second')),
   df1[,-which(names(df1) == 'Page')]
 )
 df2 <- cbind(
-  colsplit(df2$Page, '.wikipedia.org_', c('first', 'second')),
+  colsplit(df2$Page, '.wikipedia.org_', c('First', 'Second')),
   df2[,-which(names(df2) == 'Page')]
 )
 
-## explode column: first column into Article, and Language columns
+## explode column: First column into Article, and Language columns
 df1 <- cbind(
-  colsplit(df1$first, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
-  df1[,-which(names(df1) == 'first')]
+  colsplit(df1$First, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
+  df1[,-which(names(df1) == 'First')]
 )
 df2 <- cbind(
-  colsplit(df2$first, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
-  df2[,-which(names(df2) == 'first')]
+  colsplit(df2$First, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
+  df2[,-which(names(df2) == 'First')]
 )
 
-## explode column: second column into Access, and Agent columns
+## explode column: Second column into Access, and Agent columns
 df1 <- cbind(
-  colsplit(df1$second, '_', c('Access', 'Agent')),
-  df1[,-which(names(df1) == 'second')]
+  colsplit(df1$Second, '_', c('Access', 'Agent')),
+  df1[,-which(names(df1) == 'Second')]
 )
 df2 <- cbind(
-  colsplit(df2$second, '_', c('Access', 'Agent')),
-  df2[,-which(names(df2) == 'second')]
+  colsplit(df2$Second, '_', c('Access', 'Agent')),
+  df2[,-which(names(df2) == 'Second')]
 )
