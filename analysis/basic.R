@@ -43,7 +43,7 @@ df2 <- cbind(
   df2[,-which(names(df2) == 'Page')]
 )
 
-## explode column: second column into Article, and Language columns
+## explode column: first column into Article, and Language columns
 df1 <- cbind(
   colsplit(df1$first, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
   df1[,-which(names(df1) == 'first')]
