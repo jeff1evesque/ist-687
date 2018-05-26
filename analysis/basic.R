@@ -16,9 +16,6 @@ library('ist687utility')
 ## load packages
 load_package('reshape2')
 
-## local variables
-reshaped_page <- c('name', 'project', 'access', 'agent')
-
 ## dataset directory
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
 
@@ -36,12 +33,32 @@ download_source(
 df1 <- load_df('./dataset/train_1.csv')
 df2 <- load_df('./dataset/train_2.csv')
 
-## explode column: first column (i.e. 'Page') will become four columns
+## explode column: first column into two general columns
 df1 <- cbind(
-    colsplit(df1$Page, '_', reshaped_page),
-    df1[,-which(names(df1) == "Page")]
+    colsplit(df1$Page, '.wikipedia.org_', c('first', 'second')),
+    df1[,-which(names(df1) == 'Page')]
 )
 df2 <- cbind(
-  colsplit(df2$Page, '_', reshaped_page),
-  df2[,-which(names(df2) == "Page")]
+  colsplit(df2$Page, '.wikipedia.org_', c('first', 'second')),
+  df2[,-which(names(df2) == 'Page')]
+)
+
+## explode column: second column into Article, and Language columns
+df1 <- cbind(
+  colsplit(df1$first, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
+  df1[,-which(names(df1) == 'first')]
+)
+df2 <- cbind(
+  colsplit(df2$first, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
+  df2[,-which(names(df2) == 'first')]
+)
+
+## explode column: info column into Access, and Agent columns
+df1 <- cbind(
+  colsplit(df1$second, '_', c('Access', 'Agent')),
+  df1[,-which(names(df1) == 'second')]
+)
+df2 <- cbind(
+  colsplit(df2$second, '_', c('Access', 'Agent')),
+  df2[,-which(names(df2) == 'second')]
 )
