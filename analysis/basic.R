@@ -21,12 +21,12 @@ dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
 
 ## download datasets
 download_source(
-    'https://www.dropbox.com/s/x14f3bg8flej1n7/train_1.csv?dl=1',
-    './dataset/train_1.csv'
+  'https://www.dropbox.com/s/x14f3bg8flej1n7/train_1.csv?dl=1',
+  './dataset/train_1.csv'
 )
 download_source(
-    'https://www.dropbox.com/s/o2df10dnyt3bg02/train_2.csv?dl=1',
-    './dataset/train_2.csv'
+  'https://www.dropbox.com/s/o2df10dnyt3bg02/train_2.csv?dl=1',
+  './dataset/train_2.csv'
 )
 
 ## create dataframes
@@ -35,8 +35,8 @@ df2 <- load_df('./dataset/train_2.csv')
 
 ## explode column: first column into two general columns
 df1 <- cbind(
-    colsplit(df1$Page, '.wikipedia.org_', c('first', 'second')),
-    df1[,-which(names(df1) == 'Page')]
+  colsplit(df1$Page, '.wikipedia.org_', c('first', 'second')),
+  df1[,-which(names(df1) == 'Page')]
 )
 df2 <- cbind(
   colsplit(df2$Page, '.wikipedia.org_', c('first', 'second')),
@@ -53,7 +53,7 @@ df2 <- cbind(
   df2[,-which(names(df2) == 'first')]
 )
 
-## explode column: info column into Access, and Agent columns
+## explode column: second column into Access, and Agent columns
 df1 <- cbind(
   colsplit(df1$second, '_', c('Access', 'Agent')),
   df1[,-which(names(df1) == 'second')]
