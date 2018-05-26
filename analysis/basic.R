@@ -19,8 +19,9 @@ load_package('reshape2')
 ## local variables
 domain_regex <- '_www\\.wikimedia\\.org_|\\.wikimedia\\.org_|\\.mediawiki\\.org_|\\.wikipedia\\.org_'
 
-## dataset directory
+## create ignored directories
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
+dir.create(file.path(cwd, 'visualization'), showWarnings = FALSE)
 
 ## download datasets
 download_source(
