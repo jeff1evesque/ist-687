@@ -15,6 +15,8 @@ library('ist687utility')
 
 ## load packages
 load_package('reshape2')
+load_package('zoo')
+load_package('Hmisc')
 
 ## local variables
 domain_regex <- '_www.wikimedia.org_|.wikimedia.org_|.mediawiki.org_|.wikipedia.org_'
@@ -68,30 +70,28 @@ df2 <- cbind(
 )
 
 ## year range
-df1_start_date <- as.Date(colnames(df1)[5], format='X%Y.%m.%d')
-df1_end_date <- as.Date(colnames(df1)[length(colnames(df1))], format='X%Y.%m.%d')
-df2_start_date <- as.Date(colnames(df2)[5], format='X%Y.%m.%d')
-df2_end_date <- as.Date(colnames(df2)[length(colnames(df2))], format='X%Y.%m.%d')
+start_date1 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df1)[5]), format='X%Y.%m'))
+start_date2 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df2)[5]), format='X%Y.%m'))
+end_date1 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df1)[length(colnames(df1))]), format='X%Y.%m'))
+end_date2 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df2)[length(colnames(df2))]), format='X%Y.%m'))
 
-start_date1 <- df1_start_date
-start_date2 <- df2_start_date
-
-## combine columns
+## aggregate dataframe
 df1_aggregate <- df1
 df2_aggregate <- df2
 
-while (start_date1 <= df1_end_date) {
+## combine columns
+while (start_date1 <= end_date1) {
   Reduce(
     '+',
     df1_aggregate[,grep(paste0('X',format(start_date1,"%Y.%m")),names(df1_aggregate))]
   )
-  start_date1 <- start_date1 + 1
+  start_date1 <- start_date1 + monthDays(start_date1)
 }
 
-while (start_date2 <= df2_end_date) {
+while (start_date2 <= end_date2) {
   Reduce(
     '+',
     df2_aggregate[,grep(paste0('X',format(start_date2,"%Y.%m")),names(df2_aggregate))]
   )
-  start_date2 <- start_date2 + 1
+  start_date1 <- start_date1 + monthDays(start_date1)
 }
