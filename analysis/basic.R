@@ -89,7 +89,7 @@ while (start_date1 <= end_date1) {
   col_idx1 <- grep(paste0('X',format(start_date1,"%Y.%m")),names(df1_aggregate))
 
   ## create new aggregate columns: aggregated on month
-  df1_aggregate[, paste0('rowSum', format(start_date1,"%Y.%m"))] <- rowSums(df1_aggregate[,col_idx1])
+  df1_aggregate[, paste0(format(start_date1,"%Y.%m"))] <- rowSums(df1_aggregate[,col_idx1])
 
   ## remove individual day columns
   df1_aggregate <- df1_aggregate[, -(col_idx1)]
@@ -103,7 +103,7 @@ while (start_date2 <= end_date2) {
   col_idx2 <- grep(paste0('X',format(start_date2,"%Y.%m")),names(df2_aggregate))
 
   ## create new aggregate columns: aggregated on month
-  df2_aggregate[, paste0('rowSum', format(start_date2,"%Y.%m"))] <- rowSums(df2_aggregate[,col_idx2])
+  df2_aggregate[, paste0(format(start_date2,"%Y.%m"))] <- rowSums(df2_aggregate[,col_idx2])
 
   ## remove individual day columns
   df2_aggregate <- df2_aggregate[, -(col_idx2)]
