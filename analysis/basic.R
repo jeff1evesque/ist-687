@@ -15,12 +15,15 @@ library('ist687utility')
 
 ## load packages
 load_package('reshape2')
+load_package('zoo')
+load_package('Hmisc')
 
 ## local variables
-domain_regex <- '_www\\.wikimedia\\.org_|\\.wikimedia\\.org_|\\.mediawiki\\.org_|\\.wikipedia\\.org_'
+domain_regex <- '_www.wikimedia.org_|.wikimedia.org_|.mediawiki.org_|.wikipedia.org_'
 
-## dataset directory
+## create ignored directories
 dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
+dir.create(file.path(cwd, 'visualization'), showWarnings = FALSE)
 
 ## download datasets
 download_source(
@@ -38,21 +41,21 @@ df2 <- load_df('./dataset/train_2.csv')
 
 ## explode column: Page column into two general columns
 df1 <- cbind(
-  colsplit(df1$Page, pattern=regex(domain_regex, character.only=TRUE), c('First', 'Second')),
+  colsplit(df1$Page, pattern=domain_regex, c('First', 'Second')),
   df1[,-which(names(df1) == 'Page')]
 )
 df2 <- cbind(
-  colsplit(df2$Page, pattern=regex(domain_regex, character.only=TRUE), c('First', 'Second')),
+  colsplit(df2$Page, pattern=domain_regex, c('First', 'Second')),
   df2[,-which(names(df2) == 'Page')]
 )
 
 ## explode column: First column into Article, and Language columns
 df1 <- cbind(
-  colsplit(df1$First, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
+  colsplit(df1$First, pattern='_(?=[^_]+$)', c('Article', 'Language')),
   df1[,-which(names(df1) == 'First')]
 )
 df2 <- cbind(
-  colsplit(df2$First, pattern=regex('_(?=[^_]+$)'), c('Article', 'Language')),
+  colsplit(df2$First, pattern='_(?=[^_]+$)', c('Article', 'Language')),
   df2[,-which(names(df2) == 'First')]
 )
 
@@ -65,3 +68,46 @@ df2 <- cbind(
   colsplit(df2$Second, '_', c('Access', 'Agent')),
   df2[,-which(names(df2) == 'Second')]
 )
+
+##
+## year range: remove day, convert to year:month, then convert back to year:month:day
+##     to ensure the day portion starts at 1, to allow below increment by number of days
+##     in a month, via '+ monthDays(start_date1)'.
+##
+start_date1 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df1)[5]), format='X%Y.%m'))
+start_date2 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df2)[5]), format='X%Y.%m'))
+end_date1 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df1)[length(colnames(df1))]), format='X%Y.%m'))
+end_date2 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df2)[length(colnames(df2))]), format='X%Y.%m'))
+
+## aggregate dataframe
+df1_aggregate <- df1
+df2_aggregate <- df2
+
+## combine columns
+while (start_date1 <= end_date1) {
+  ## index of columns with 'Y.M' pattern
+  col_idx1 <- grep(paste0('X',format(start_date1,"%Y.%m")),names(df1_aggregate))
+
+  ## create new aggregate columns: aggregated on month
+  df1_aggregate[, paste0(format(start_date1,"%Y.%m"))] <- rowSums(df1_aggregate[,col_idx1])
+
+  ## remove individual day columns
+  df1_aggregate <- df1_aggregate[, -(col_idx1)]
+
+  ## increment loop
+  start_date1 <- start_date1 + monthDays(start_date1)
+}
+
+while (start_date2 <= end_date2) {
+  ## index of columns with 'Y.M' pattern
+  col_idx2 <- grep(paste0('X',format(start_date2,"%Y.%m")),names(df2_aggregate))
+
+  ## create new aggregate columns: aggregated on month
+  df2_aggregate[, paste0(format(start_date2,"%Y.%m"))] <- rowSums(df2_aggregate[,col_idx2])
+
+  ## remove individual day columns
+  df2_aggregate <- df2_aggregate[, -(col_idx2)]
+
+  ## increment loop
+  start_date2 <- start_date2 + monthDays(start_date2)
+}
