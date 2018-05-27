@@ -77,10 +77,13 @@ start_date1 <- df1_start_date
 start_date2 <- df2_start_date
 
 ## combine columns
+df1_aggregate <- df1
+df2_aggregate <- df2
+
 while (start_date1 <= df1_end_date) {
   Reduce(
     '+',
-    df1[,grep(paste0('X',format(start_date1,"%Y.%m")),names(df2))]
+    df1_aggregate[,grep(paste0('X',format(start_date1,"%Y.%m")),names(df1_aggregate))]
   )
   start_date1 <- start_date1 + 1
 }
@@ -88,7 +91,7 @@ while (start_date1 <= df1_end_date) {
 while (start_date2 <= df2_end_date) {
   Reduce(
     '+',
-    df2[,grep(paste0('X',format(start_date2,"%Y.%m")),names(df2))]
+    df2_aggregate[,grep(paste0('X',format(start_date2,"%Y.%m")),names(df2_aggregate))]
   )
   start_date2 <- start_date2 + 1
 }
