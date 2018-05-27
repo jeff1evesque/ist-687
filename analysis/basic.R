@@ -80,7 +80,7 @@ start_date2 <- df2_start_date
 while (start_date1 <= df1_end_date) {
   Reduce(
     '+',
-    df1[,grep(paste0('X',format(df1_start_date,"%Y.%m")),names(df1))]
+    df1[,grep(paste0('X',format(start_date1,"%Y.%m")),names(df2))]
   )
   start_date1 <- start_date1 + 1
 }
@@ -88,7 +88,7 @@ while (start_date1 <= df1_end_date) {
 while (start_date2 <= df2_end_date) {
   Reduce(
     '+',
-    df2[,grep(paste0('X',format(df2_start_date,"%Y.%m")),names(df2))]
+    df2[,grep(paste0('X',format(start_date2,"%Y.%m")),names(df2))]
   )
   start_date2 <- start_date2 + 1
 }
