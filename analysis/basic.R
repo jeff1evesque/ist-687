@@ -73,17 +73,22 @@ df1_end_date <- as.Date(colnames(df1)[length(colnames(df1))], format='X%Y.%m.%d'
 df2_start_date <- as.Date(colnames(df2)[5], format='X%Y.%m.%d')
 df2_end_date <- as.Date(colnames(df2)[length(colnames(df2))], format='X%Y.%m.%d')
 
+start_date1 <- df1_start_date
+start_date2 <- df2_start_date
+
 ## combine columns
-while (df1_start_date <= df1_end_date) {
+while (start_date1 <= df1_end_date) {
   Reduce(
     '+',
     df1[,grep(paste0('X',format(df1_start_date,"%Y.%m")),names(df1))]
   )
+  start_date1 <- start_date1 + 1
 }
 
-while (df2_start_date <= df2_end_date) {
+while (start_date2 <= df2_end_date) {
   Reduce(
     '+',
     df2[,grep(paste0('X',format(df2_start_date,"%Y.%m")),names(df2))]
   )
+  start_date2 <- start_date2 + 1
 }
