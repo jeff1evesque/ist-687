@@ -85,17 +85,29 @@ df2_aggregate <- df2
 
 ## combine columns
 while (start_date1 <= end_date1) {
-  Reduce(
-    '+',
-    df1_aggregate[,grep(paste0('X',format(start_date1,"%Y.%m")),names(df1_aggregate))]
-  )
+  ## index of columns with 'Y.M' pattern
+  col_idx1 <- grep(paste0('X',format(start_date1,"%Y.%m")),names(df1_aggregate))
+
+  ## create new aggregate columns: aggregated on month
+  df1_aggregate[, paste0('rowSum', format(start_date1,"%Y.%m"))] <- rowSums(df1_aggregate[,col_idx1])
+
+  ## remove individual day columns
+  df1_aggregate <- df1_aggregate[, -(col_idx1)]
+
+  ## increment loop
   start_date1 <- start_date1 + monthDays(start_date1)
 }
 
 while (start_date2 <= end_date2) {
-  Reduce(
-    '+',
-    df2_aggregate[,grep(paste0('X',format(start_date2,"%Y.%m")),names(df2_aggregate))]
-  )
+  ## index of columns with 'Y.M' pattern
+  col_idx2 <- grep(paste0('X',format(start_date2,"%Y.%m")),names(df2_aggregate))
+
+  ## create new aggregate columns: aggregated on month
+  df2_aggregate[, paste0('rowSum', format(start_date2,"%Y.%m"))] <- rowSums(df2_aggregate[,col_idx2])
+
+  ## remove individual day columns
+  df2_aggregate <- df2_aggregate[, -(col_idx2)]
+
+  ## increment loop
   start_date2 <- start_date2 + monthDays(start_date2)
 }
