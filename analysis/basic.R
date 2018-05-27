@@ -67,4 +67,23 @@ df2 <- cbind(
   df2[,-which(names(df2) == 'Second')]
 )
 
+## year range
+df1_start_date <- as.Date(colnames(df1)[5], format='X%Y.%m.%d')
+df1_end_date <- as.Date(colnames(df1)[length(colnames(df1))], format='X%Y.%m.%d')
+df2_start_date <- as.Date(colnames(df2)[5], format='X%Y.%m.%d')
+df2_end_date <- as.Date(colnames(df2)[length(colnames(df2))], format='X%Y.%m.%d')
 
+## combine columns
+while (df1_start_date <= df1_end_date) {
+  Reduce(
+    '+',
+    df1[,grep(paste0('X',format(df1_start_date,"%Y.%m")),names(df1))]
+  )
+}
+
+while (df2_start_date <= df2_end_date) {
+  Reduce(
+    '+',
+    df2[,grep(paste0('X',format(df2_start_date,"%Y.%m")),names(df2))]
+  )
+}
