@@ -69,7 +69,11 @@ df2 <- cbind(
   df2[,-which(names(df2) == 'Second')]
 )
 
-## year range
+##
+## year range: remove day, convert to year:month, then convert back to year:month:day
+##     to ensure the day portion starts at 1, to allow below increment by number of days
+##     in a month, via '+ monthDays(start_date1)'.
+##
 start_date1 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df1)[5]), format='X%Y.%m'))
 start_date2 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df2)[5]), format='X%Y.%m'))
 end_date1 <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df1)[length(colnames(df1))]), format='X%Y.%m'))
