@@ -129,15 +129,21 @@ ggsave(
     dpi = 100
 )
 
-## boxplot: device vs page views
-ggplot(meltdf, aes(x=Access, y=value, fill=Access)) +
-    geom_boxplot(aes(color=Access)) +
-    labs(x = 'Page views', y = 'Access type', title = 'Access type vs. Page views') +
-    theme(plot.title = element_text(hjust = 0.5)) +
-    coord_flip()
+##
+## points: device vs page views (density)
+##
+## Note: boxplot renders very similar to points, since spread is
+##       very large, while the interquartile range relatively
+##       insignificant to the spread.
+##
+ggplot(meltdf, aes(x=Access, y=value)) +
+    geom_point(aes(fill = Access, color = value)) +
+    guides(fill=FALSE)
+    labs(x = 'Access type', y = 'Page views', title = 'Access type vs. Page views') +
+    theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
-  'visualization/boxplot-device-page-views.png',
+  'visualization/points-device-page-views.png',
   width = 16,
   height = 9,
   dpi = 100
