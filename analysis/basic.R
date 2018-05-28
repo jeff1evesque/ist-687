@@ -113,11 +113,30 @@ while (start_date2 <= end_date2) {
   start_date2 <- start_date2 + monthDays(start_date2)
 }
 
-## barchart: device vs page views
+## convert wide to long
 meltdf <- melt(df1_aggregate[-c(2, 3, 4)], id='Access')
-ggplot(meltdf,aes(x=Access, y=value, fill=variable)) +
+
+## barchart: device vs page views
+ggplot(meltdf, aes(x=Access, y=value, fill=variable)) +
     geom_bar(stat='identity') +
     labs(x = 'Access type', y = 'Page views', title = 'Page views vs. Access type') +
     theme(plot.title = element_text(hjust = 0.5))
 
-ggsave('visualization/device-page-views.png', width = 16, height = 9, dpi = 100)
+ggsave(
+    'visualization/barchart-device-page-views.png',
+    width = 16,
+    height = 9,
+    dpi = 100
+)
+
+## boxplot: device vs page views
+ggplot(meltdf, aes(x=Access, y=value, fill=Access)) +
+    geom_boxplot(aes(color=Access)) +
+    coord_flip()
+
+ggsave(
+  'visualization/boxplot-device-page-views.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
