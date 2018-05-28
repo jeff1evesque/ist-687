@@ -118,6 +118,6 @@ meltdf <- melt(df1_aggregate[-c(2, 3, 4)], id='Access')
 ggplot(meltdf,aes(x=Access, y=value, fill=variable)) +
     geom_bar(stat='identity') +
     labs(x = 'Access type', y = 'Page views', title = 'Page views vs. Access type') +
-    theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+    theme(plot.title = element_text(hjust = 0.5))
 
 ggsave('visualization/device-page-views.png', width = 16, height = 9, dpi = 100)
