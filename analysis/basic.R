@@ -150,9 +150,9 @@ ggsave(
 ##       insignificant to the spread.
 ##
 ggplot(meltdf, aes(x=Access, y=value)) +
-    geom_point(aes(fill = Access, color = Access)) +
+    geom_point(aes(fill = Access, color = Access), alpha = 0.35) +
     guides(fill=FALSE) +
-    labs(x = 'Total: Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Page views') +
+    labs(x = 'Total: Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Access') +
     theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
