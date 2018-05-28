@@ -150,7 +150,7 @@ ggsave(
 ##       insignificant to the spread.
 ##
 ggplot(meltdf, aes(x=Access, y=value)) +
-    geom_point(aes(fill = Access, color = value)) +
+    geom_point(aes(fill = Access, color = Access)) +
     guides(fill=FALSE) +
     labs(x = 'Total: Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Page views') +
     theme(plot.title = element_text(hjust = 0.5))
@@ -164,7 +164,7 @@ ggsave(
 
 ## points: monthly page views by access (density)
 ggplot(meltdf, aes(x = variable)) +
-  geom_point(aes(y = value, color = Access, group = 1)) +
+  geom_point(aes(y = value, color = Access)) +
   labs(x = 'Monthly: Access type', y = 'Page views', title = 'Page views vs. Access type') +
   theme(plot.title = element_text(hjust = 0.5))
 
