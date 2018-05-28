@@ -17,6 +17,7 @@ library('ist687utility')
 load_package('reshape2')
 load_package('zoo')
 load_package('Hmisc')
+load_package('ggplot2')
 
 ## local variables
 domain_regex <- '_www.wikimedia.org_|.wikimedia.org_|.mediawiki.org_|.wikipedia.org_'
@@ -111,3 +112,39 @@ while (start_date2 <= end_date2) {
   ## increment loop
   start_date2 <- start_date2 + monthDays(start_date2)
 }
+
+## convert wide to long
+meltdf <- melt(df1_aggregate[-c(2, 3, 4)], id='Access')
+
+## barchart: device vs page views
+ggplot(meltdf, aes(x=Access, y=value, fill=variable)) +
+    geom_bar(stat='identity') +
+    labs(x = 'Access type', y = 'Page views', title = 'Page views vs. Access type') +
+    theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+    'visualization/barchart-device-page-views.png',
+    width = 16,
+    height = 9,
+    dpi = 100
+)
+
+##
+## points: device vs page views (density)
+##
+## Note: boxplot renders very similar to points, since spread is
+##       very large, while the interquartile range relatively
+##       insignificant to the spread.
+##
+ggplot(meltdf, aes(x=Access, y=value)) +
+    geom_point(aes(fill = Access, color = value)) +
+    guides(fill=FALSE)
+    labs(x = 'Access type', y = 'Page views', title = 'Access type vs. Page views') +
+    theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/points-device-page-views.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
