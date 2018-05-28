@@ -116,21 +116,34 @@ while (start_date2 <= end_date2) {
 ## convert wide to long
 meltdf <- melt(df1_aggregate[-c(2, 3, 4)], id='Access')
 
-## barchart: device vs page views
-ggplot(meltdf, aes(x=Access, y=value, fill=variable)) +
+## barchart: monthly page views by access
+ggplot(meltdf, aes(x=variable, y=value, fill=Access)) +
     geom_bar(stat='identity') +
-    labs(x = 'Access type', y = 'Page views', title = 'Page views vs. Access type') +
+    labs(x = 'Year.Month', y = 'Page views', title = 'Page views vs. Year.Month') +
     theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
-    'visualization/barchart-device-page-views.png',
+    'visualization/barchart-monthly-access.png',
     width = 16,
     height = 9,
     dpi = 100
 )
 
+## barchart: total page views by access
+ggplot(meltdf, aes(x=Access, y=value, fill=variable)) +
+  geom_bar(stat='identity') +
+  labs(x = 'Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/barchart-total-access.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
 ##
-## points: device vs page views (density)
+## points: total page views by access (density)
 ##
 ## Note: boxplot renders very similar to points, since spread is
 ##       very large, while the interquartile range relatively
@@ -138,12 +151,25 @@ ggsave(
 ##
 ggplot(meltdf, aes(x=Access, y=value)) +
     geom_point(aes(fill = Access, color = value)) +
-    guides(fill=FALSE)
-    labs(x = 'Access type', y = 'Page views', title = 'Access type vs. Page views') +
+    guides(fill=FALSE) +
+    labs(x = 'Total: Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Page views') +
     theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
-  'visualization/points-device-page-views.png',
+  'visualization/points-total-access.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## points: monthly page views by access (density)
+ggplot(meltdf, aes(x = variable)) +
+  geom_point(aes(y = value, color = Access, group = 1)) +
+  labs(x = 'Monthly: Access type', y = 'Page views', title = 'Page views vs. Access type') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/points-monthly-access.png',
   width = 16,
   height = 9,
   dpi = 100
