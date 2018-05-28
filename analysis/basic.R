@@ -132,6 +132,8 @@ ggsave(
 ## boxplot: device vs page views
 ggplot(meltdf, aes(x=Access, y=value, fill=Access)) +
     geom_boxplot(aes(color=Access)) +
+    labs(x = 'Page views', y = 'Access type', title = 'Access type vs. Page views') +
+    theme(plot.title = element_text(hjust = 0.5)) +
     coord_flip()
 
 ggsave(
