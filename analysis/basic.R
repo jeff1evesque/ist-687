@@ -114,23 +114,23 @@ while (start_date2 <= end_date2) {
 }
 
 ## convert wide to long
-meltdf <- melt(df1_aggregate[-c(2, 3, 4)], id='Access')
+access.m <- melt(df1_aggregate[-c(2, 3, 4)], id='Access')
 
 ## barchart: monthly page views by access
-ggplot(meltdf, aes(x=variable, y=value, fill=Access)) +
-    geom_bar(stat='identity') +
-    labs(x = 'Year.Month', y = 'Page views', title = 'Page views vs. Year.Month') +
-    theme(plot.title = element_text(hjust = 0.5))
+ggplot(access.m, aes(x=variable, y=value, fill=Access)) +
+  geom_bar(stat='identity') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Page views vs. Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
-    'visualization/barchart-monthly-access.png',
-    width = 16,
-    height = 9,
-    dpi = 100
+  'visualization/barchart-monthly-access.png',
+  width = 16,
+  height = 9,
+  dpi = 100
 )
 
 ## barchart: total page views by access
-ggplot(meltdf, aes(x=Access, y=value, fill=variable)) +
+ggplot(access.m, aes(x=Access, y=value, fill=variable)) +
   geom_bar(stat='identity') +
   labs(x = 'Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Year.Month') +
   theme(plot.title = element_text(hjust = 0.5))
@@ -149,11 +149,11 @@ ggsave(
 ##       very large, while the interquartile range relatively
 ##       insignificant to the spread.
 ##
-ggplot(meltdf, aes(x=Access, y=value)) +
-    geom_point(aes(fill = Access, color = Access), alpha = 0.35) +
-    guides(fill=FALSE) +
-    labs(x = 'Total: Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Access') +
-    theme(plot.title = element_text(hjust = 0.5))
+ggplot(access.m, aes(x=Access, y=value)) +
+  geom_point(aes(fill = Access, color = Access), alpha = 0.35) +
+  guides(fill=FALSE) +
+  labs(x = 'Total: Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Access') +
+  theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
   'visualization/points-total-access.png',
@@ -163,13 +163,29 @@ ggsave(
 )
 
 ## points: monthly page views by access (density)
-ggplot(meltdf, aes(x = variable)) +
+ggplot(access.m, aes(x = variable)) +
   geom_point(aes(y = value, color = Access)) +
   labs(x = 'Monthly: Access type', y = 'Page views', title = 'Page views vs. Access type') +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
   'visualization/points-monthly-access.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## convert wide to long
+agent.m <- melt(df1_aggregate[-c(1, 3, 4)], id='Agent')
+
+## barchart: total page views by agent
+ggplot(agent.m, aes(x=Agent, y=value)) +
+  geom_bar(stat='identity', position='dodge') +
+  labs(x = 'Agent', y = 'Page views', title = 'Page views vs. Agent') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/barchart-total-agent.png',
   width = 16,
   height = 9,
   dpi = 100
