@@ -203,3 +203,36 @@ ggsave(
   height = 9,
   dpi = 100
 )
+
+##
+## points: total page views by agent (density)
+##
+## Note: boxplot renders very similar to points, since spread is
+##       very large, while the interquartile range relatively
+##       insignificant to the spread.
+##
+ggplot(agent.m, aes(x=Agent, y=value)) +
+  geom_point(aes(fill = Agent, color = Agent), alpha = 0.35) +
+  guides(fill=FALSE) +
+  labs(x = 'Total: Agent type', y = 'Page views', title = 'Agent: Page views vs. Type', color = 'Agent') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/points-total-agent.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## points: monthly page views by agent (density)
+ggplot(agent.m, aes(x = variable)) +
+  geom_point(aes(y = value, color = Agent)) +
+  labs(x = 'Monthly: Agent type', y = 'Page views', title = 'Agent: Page views vs. Type') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/points-monthly-agent.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
