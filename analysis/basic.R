@@ -119,7 +119,7 @@ access.m <- melt(df1_aggregate[-c(2, 3, 4)], id='Access')
 ## barchart: monthly page views by access
 ggplot(access.m, aes(x=variable, y=value, fill=Access)) +
   geom_bar(stat='identity') +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Page views vs. Year.Month') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Access: Page views vs. Year.Month') +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
@@ -132,7 +132,7 @@ ggsave(
 ## barchart: total page views by access
 ggplot(access.m, aes(x=Access, y=value, fill=variable)) +
   geom_bar(stat='identity') +
-  labs(x = 'Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Year.Month') +
+  labs(x = 'Access type', y = 'Page views', title = 'Access: Page views vs. Type', color = 'Year.Month') +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
@@ -152,7 +152,7 @@ ggsave(
 ggplot(access.m, aes(x=Access, y=value)) +
   geom_point(aes(fill = Access, color = Access), alpha = 0.35) +
   guides(fill=FALSE) +
-  labs(x = 'Total: Access type', y = 'Page views', title = 'Page views vs. Access type', color = 'Access') +
+  labs(x = 'Total: Access type', y = 'Page views', title = 'Access: Page views vs. Type', color = 'Access') +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
@@ -165,7 +165,7 @@ ggsave(
 ## points: monthly page views by access (density)
 ggplot(access.m, aes(x = variable)) +
   geom_point(aes(y = value, color = Access)) +
-  labs(x = 'Monthly: Access type', y = 'Page views', title = 'Page views vs. Access type') +
+  labs(x = 'Monthly: Access type', y = 'Page views', title = 'Access: Page views vs. Access type') +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
@@ -178,10 +178,23 @@ ggsave(
 ## convert wide to long
 agent.m <- melt(df1_aggregate[-c(1, 3, 4)], id='Agent')
 
+## barchart: monthly page views by agent
+ggplot(agent.m, aes(x=variable, y=value, fill=Agent)) +
+  geom_bar(stat='identity') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Agent: Page views vs. Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/barchart-monthly-agent.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
 ## barchart: total page views by agent
 ggplot(agent.m, aes(x=Agent, y=value)) +
   geom_bar(stat='identity', position='dodge') +
-  labs(x = 'Agent', y = 'Page views', title = 'Page views vs. Agent') +
+  labs(x = 'Agent', y = 'Page views', title = 'Agent: Page views vs. Agent') +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
