@@ -230,7 +230,7 @@ monthly_total_top10.m <- melt(monthly_total_top10[,-c(1:4)])
 ggplot(data = monthly_total_top10.m, aes(x=variable, y=value, group=1)) +
   geom_point() +
   geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Total: Page views vs. Year.Month') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10 Articles: Page views vs. Year.Month') +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
