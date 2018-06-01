@@ -142,7 +142,7 @@ ggsave(
 )
 
 ## convert wide to long
-agent.m <- melt(df1_aggregate[-c(1, 3, 4)], id='Agent')
+agent.m <- melt(df_aggregate[-c(1, 3, 4)], id='Agent')
 
 ## barchart: monthly page views by agent
 ggplot(agent.m, aes(x=variable, y=value, fill=Agent)) +
