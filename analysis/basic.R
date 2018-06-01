@@ -215,8 +215,31 @@ ggplot(data = monthly_pageviews.m, aes(x=rownames(article_monthly.m), y=value, g
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ggsave(
-  'visualization/timeseries-monthly-pageviews.png',
+  'visualization/timeseries-monthly-total-pageviews.png',
   width = 16,
   height = 9,
   dpi = 100
 )
+
+## time series: sum top 10 articles, aggregated per month
+monthly_total_top10 <- lapply(df_aggregate[,-c(1:4)], function(x) sum(x[order(x, decreasing = TRUE)][1:10]))
+monthly_total_top10 <- data.frame(monthly_total_top10)
+colnames(monthly_total_top10) <- gsub('X', '', colnames(monthly_total_top10))
+monthly_total_top10.m <- melt(monthly_total_top10[,-c(1:4)])
+
+ggplot(data = monthly_total_top10.m, aes(x=variable, y=value, group=1)) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Total: Page views vs. Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-monthly-top10-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## time series: top 10 articles, aggregated per month
+
