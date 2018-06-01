@@ -202,3 +202,21 @@ ggsave(
   height = 9,
   dpi = 100
 )
+
+## convert wide to long
+monthly_pageviews.m <- melt(colSums(df_aggregate[,-c(1:4)]))
+
+## time series: sum each row, aggregated per month
+ggplot(data = monthly_pageviews.m, aes(x=rownames(article_monthly.m), y=value, group=1)) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Total: Page views vs. Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-monthly-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
