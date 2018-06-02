@@ -222,7 +222,7 @@ ggsave(
 )
 
 ## time series: sum top 10 articles, aggregated per month
-monthly_total_top10 <- lapply(df_aggregate[,-c(1:4)], function(x) sum(x[order(x, decreasing = TRUE)][1:10]))
+monthly_total_top10 <- lapply(df_aggregate, function(x) sort(order(x, decreasing = FALSE)[1:10]))
 monthly_total_top10 <- data.frame(monthly_total_top10)
 colnames(monthly_total_top10) <- gsub('X', '', colnames(monthly_total_top10))
 monthly_total_top10.m <- melt(monthly_total_top10[,-c(1:4)])
@@ -230,7 +230,7 @@ monthly_total_top10.m <- melt(monthly_total_top10[,-c(1:4)])
 ggplot(data = monthly_total_top10.m, aes(x=variable, y=value, group=1)) +
   geom_point() +
   geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10 Articles: Page views vs. Year.Month') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10 Sum: Page views vs. Year.Month') +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
