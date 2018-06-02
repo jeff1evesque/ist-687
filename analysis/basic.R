@@ -250,3 +250,17 @@ ggsave(
 row_sums <- rowSums(df_aggregate[,-c(1:4)])
 top_indices <- top(row_sums, 10)
 average_top10.m <- melt(df_aggregate[top_indexes,-c(2)], id.var=c('Article', 'Language', 'Access'))
+
+ggplot(data = average_top10.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Articles: Page views vs. Year.Month', color = 'Article') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-individual-top10-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
