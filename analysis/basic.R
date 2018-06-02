@@ -202,3 +202,65 @@ ggsave(
   height = 9,
   dpi = 100
 )
+
+## convert wide to long
+monthly_pageviews.m <- melt(colSums(df_aggregate[,-c(1:4)]))
+
+## time series: sum each row, aggregated per month
+ggplot(data = monthly_pageviews.m, aes(x=rownames(article_monthly.m), y=value, group=1)) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Total: Page views vs. Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-monthly-total-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## time series: sum top 10 articles, aggregated per month
+monthly_total_top10 <- lapply(df_aggregate, function(x) sum(order(x, decreasing = FALSE)[1:10]))
+monthly_total_top10 <- data.frame(monthly_total_top10)
+colnames(monthly_total_top10) <- gsub('X', '', colnames(monthly_total_top10))
+monthly_total_top10.m <- melt(monthly_total_top10[,-c(1:4)])
+
+ggplot(data = monthly_total_top10.m, aes(x=variable, y=value, group=1)) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10 Sum: Page views vs. Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-monthly-top10-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+##
+## time series: top 10 articles, aggregated per month
+##
+## Note: top 10 articles attained by summing across rows, then selecting
+##       the 10 highest values.
+##
+row_sums <- rowSums(df_aggregate[,-c(1:4)])
+top_indices <- top(row_sums, 10)
+average_top10.m <- melt(df_aggregate[top_indexes,-c(2)], id.var=c('Article', 'Language', 'Access'))
+
+ggplot(data = average_top10.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Articles: Page views vs. Year.Month', color = 'Article') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-monthly-individual-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
