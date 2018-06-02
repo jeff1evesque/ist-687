@@ -2,7 +2,7 @@
 ## top_indices.R, determine n largest values in a vector,
 ##     and return the corresponding vector index.
 ##
-top <- function(x, n=10){
+top_indices <- function(x, n=10){
   result <- numeric()
   for(i in 1:n){
     j <- which.max(x)

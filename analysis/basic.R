@@ -248,8 +248,8 @@ ggsave(
 ##       the 10 highest values.
 ##
 row_sums <- rowSums(df_aggregate[,-c(1:4)])
-top_indices <- top(row_sums, 10)
-average_top10.m <- melt(df_aggregate[top_indexes,-c(2)], id.var=c('Article', 'Language', 'Access'))
+row_indices <- top_indices(row_sums, 10)
+average_top10.m <- melt(df_aggregate[row_indices,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
 ggplot(data = average_top10.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
   geom_point() +
