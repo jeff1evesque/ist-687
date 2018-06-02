@@ -259,7 +259,7 @@ ggplot(data = average_top10.m, aes(x=variable, y=value, group=interaction(Articl
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ggsave(
-  'visualization/timeseries-individual-top10-pageviews.png',
+  'visualization/timeseries-monthly-individual-pageviews.png',
   width = 16,
   height = 9,
   dpi = 100
