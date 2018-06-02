@@ -222,7 +222,7 @@ ggsave(
 )
 
 ## time series: sum top 10 articles, aggregated per month
-monthly_total_top10 <- lapply(df_aggregate, function(x) sort(order(x, decreasing = FALSE)[1:10]))
+monthly_total_top10 <- lapply(df_aggregate, function(x) sum(order(x, decreasing = FALSE)[1:10]))
 monthly_total_top10 <- data.frame(monthly_total_top10)
 colnames(monthly_total_top10) <- gsub('X', '', colnames(monthly_total_top10))
 monthly_total_top10.m <- melt(monthly_total_top10[,-c(1:4)])
@@ -241,5 +241,12 @@ ggsave(
   dpi = 100
 )
 
+##
 ## time series: top 10 articles, aggregated per month
-
+##
+## Note: top 10 articles attained by summing across rows, then selecting
+##       the 10 highest values.
+##
+row_sums <- rowSums(df_aggregate[,-c(1:4)])
+top_indices <- top(row_sums, 10)
+average_top10.m <- melt(df_aggregate[top_indexes,-c(2)], id.var=c('Article', 'Language', 'Access'))
