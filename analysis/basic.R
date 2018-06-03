@@ -14,10 +14,7 @@ devtools::install_local(paste(cwd, sep='', '/packages/ist687utility'))
 library('ist687utility')
 
 ## load packages
-load_package('reshape2')
-load_package('zoo')
-load_package('Hmisc')
-load_package('ggplot2')
+load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2'))
 
 ## local variables
 domain_regex <- '_www.wikimedia.org_|.wikimedia.org_|.mediawiki.org_|.wikipedia.org_'
