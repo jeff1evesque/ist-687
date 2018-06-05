@@ -35,6 +35,14 @@ ggsave(
   dpi = 100
 )
 
+##
+## year range: remove day, convert to year:month, then convert back to year:month:day
+##     to ensure the day portion starts at 1, to allow below increment by number of days
+##     in a month, via '+ monthDays(start_date1)'.
+##
+start_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[5]), format='X%Y.%m'))
+end_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[length(colnames(df))]), format='X%Y.%m'))
+
 ## combine columns
 while (start_date <= end_date) {
   ## index of columns with 'Y.M' pattern

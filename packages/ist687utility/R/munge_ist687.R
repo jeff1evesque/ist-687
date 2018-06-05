@@ -8,10 +8,10 @@ munge_ist687 <- function(source, filename) {
   ## create ignored directories
   dir.create(file.path(cwd, 'dataset'), showWarnings = FALSE)
   dir.create(file.path(cwd, 'visualization'), showWarnings = FALSE)
-  
+
   ## download datasets
   download_source(source, filename)
-  
+
   ## create dataframe
   df <- load_df('./dataset/train_1.csv')
   
@@ -32,14 +32,6 @@ munge_ist687 <- function(source, filename) {
     colsplit(df$Second, '_', c('Access', 'Agent')),
     df[,-which(names(df) == 'Second')]
   )
-  
-  ##
-  ## year range: remove day, convert to year:month, then convert back to year:month:day
-  ##     to ensure the day portion starts at 1, to allow below increment by number of days
-  ##     in a month, via '+ monthDays(start_date1)'.
-  ##
-  start_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[5]), format='X%Y.%m'))
-  end_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[length(colnames(df))]), format='X%Y.%m'))
 
   ## return dataframe
   return(df)
