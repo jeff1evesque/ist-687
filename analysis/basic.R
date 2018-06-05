@@ -17,7 +17,7 @@ library('ist687utility')
 load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2'))
 
 ## create dataframes
-data.f.adjusted <- munge_ist687(
+df <- munge_ist687(
   'https://www.dropbox.com/s/x14f3bg8flej1n7/train_1.csv?dl=1',
   './dataset/train_1.csv'
 )
