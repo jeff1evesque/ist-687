@@ -173,7 +173,7 @@ ggsave(
 monthly_pageviews.m <- melt(colSums(df[,-c(1:4)]))
 
 ## time series: sum each row, aggregated per month
-ggplot(data = monthly_pageviews.m, aes(x=rownames(article_monthly.m), y=value, group=1)) +
+ggplot(data = monthly_pageviews.m, aes(x=rownames(monthly_pageviews.m), y=value, group=1)) +
   geom_point() +
   geom_line() +
   labs(x = 'Year.Month', y = 'Page views', title = 'Total: Page views vs. Year.Month') +

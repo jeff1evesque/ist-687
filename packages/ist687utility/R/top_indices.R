@@ -3,11 +3,8 @@
 ##     and return the corresponding vector index.
 ##
 top_indices <- function(x, n=10){
-  result <- numeric()
-  for(i in 1:n){
-    j <- which.max(x)
-    result[i] <- x[j]
-    x[j] <- -Inf
-  }
-  return(match(result, x))
+  nx <- length(x)
+  p <- nx-n
+  xp <- sort(x, partial=p)[p]
+  return(which(x > xp))
 }
