@@ -5,9 +5,11 @@
 ##     - https://www.dropbox.com/s/o2df10dnyt3bg02/train_2.csv?dl=1
 ##
 
-## set project cwd
-cwd <- dirname(dirname(rstudioapi::getSourceEditorContext()$path))
-setwd(cwd)
+## set project cwd: only execute in RStudio
+if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
+  cwd <- dirname(rstudioapi::getSourceEditorContext()$path)
+  setwd(cwd)
+}
 
 ## utility functions
 devtools::install_local(paste(cwd, sep='', '/packages/ist687utility'))
