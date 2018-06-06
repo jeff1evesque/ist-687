@@ -216,19 +216,57 @@ ggsave(
 ##       the 10 highest values.
 ##
 row_sums <- rowSums(df[,-c(1:4)])
-row_indices <- top_indices(row_sums, 10)
-average_top10.m <- melt(df[row_indices,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
-ggplot(data = average_top10.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+## top 10 articles
+row_indices_10 <- top_indices(row_sums, 10)
+average_top_10.m <- melt(df[row_indices,-c(2)], id.var=c('Article', 'Language', 'Access'))
+
+gg_timeseries_10 <- ggplot(data = average_top10.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
   geom_point() +
   geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Articles: Page views vs. Year.Month', color = 'Article') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10: Page views vs. Year.Month', color = 'Article') +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
-ggsave(
-  'visualization/timeseries-monthly-individual-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+## top 10-20 articles
+row_indices_20 <- top_indices(row_sums, 20, 10)
+average_top_20.m <- melt(df[row_indices,-c(2)], id.var=c('Article', 'Language', 'Access'))
+
+gg_timeseries_20 <- ggplot(data = average_top20.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10-20: Page views vs. Year.Month', color = 'Article') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+## top 20-30 articles
+row_indices_30 <- top_indices(row_sums, 30, 20)
+average_top_30.m <- melt(df[row_indices,-c(2)], id.var=c('Article', 'Language', 'Access'))
+
+gg_timeseries_30 <- ggplot(data = average_top20.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+  geom_point() +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 20-30: Page views vs. Year.Month', color = 'Article') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+## save visualization
+png('visualization/timeseries-monthly-individual-pageviews.png', width = 1200, height = 600)
+
+## generate grid to contain visualization
+grid.arrange(
+  gg_timeseries_10,
+  gg_timeseries_20,
+  gg_timeseries_30,
+  nrow = 3,
+  top = 'Top Articles per Month',
+  bottom = textGrob(
+    'Jeffrey Levesque',
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
 )
+
+## close current plot
+dev.off()
