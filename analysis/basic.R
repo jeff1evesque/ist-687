@@ -7,7 +7,7 @@
 
 ## set project cwd: only execute in RStudio
 if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
-  cwd <- dirname(rstudioapi::getSourceEditorContext()$path)
+  cwd <- dirname(dirname(rstudioapi::getSourceEditorContext()$path))
   setwd(cwd)
 }
 
