@@ -16,7 +16,7 @@ devtools::install_local(paste(cwd, sep='', '/packages/ist687utility'))
 library('ist687utility')
 
 ## load packages
-load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2'))
+load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2', 'grid', 'gridExtra'))
 
 ## create dataframes
 df <- munge_ist687(
