@@ -24,6 +24,9 @@ df <- munge_ist687(
   './dataset/train_1.csv'
 )
 
+## convert wide to long
+access.m <- melt(df[-c(2, 3, 4)], id='Access')
+
 ## barchart: monthly page views by access
 ggplot(access.m, aes(x=variable, y=value, fill=Access)) +
   geom_bar(stat='identity') +
@@ -36,32 +39,6 @@ ggsave(
   height = 9,
   dpi = 100
 )
-
-##
-## year range: remove day, convert to year:month, then convert back to year:month:day
-##     to ensure the day portion starts at 1, to allow below increment by number of days
-##     in a month, via '+ monthDays(start_date1)'.
-##
-start_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[5]), format='X%Y.%m'))
-end_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[length(colnames(df))]), format='X%Y.%m'))
-
-## combine columns
-while (start_date <= end_date) {
-  ## index of columns with 'Y.M' pattern
-  col_idx <- grep(paste0('X',format(start_date,"%Y.%m")),names(df))
-
-  ## create new aggregate columns: aggregated on month
-  df[, paste0(format(start_date,"%Y.%m"))] <- rowSums(df[,col_idx])
-
-  ## remove individual day columns
-  df <- df[, -(col_idx)]
-
-  ## increment loop
-  start_date <- start_date + monthDays(start_date)
-}
-
-## convert wide to long
-access.m <- melt(df[-c(2, 3, 4)], id='Access')
 
 ## barchart: total page views by access
 ggplot(access.m, aes(x=Access, y=value, fill=variable)) +
@@ -272,12 +249,12 @@ ggsave(
 row_indices_50 <- top_indices(row_sums, 50, 30)
 average_top50.m <- melt(df[row_indices_30,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
-ggplot(data = average_top50.m, aes(x=interaction(variable), y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+ggplot(data = average_top50.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
   geom_line() +
   labs(x = 'Year.Month', y = 'Page views', title = 'Top 30-50: Page views vs. Year.Month', color = 'Article') +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  scale_x_discrete(breaks=2)
+  scale_x_discrete(name="")
 
 ggsave(
   'visualization/timeseries-individual-sub50-pageviews.png',
