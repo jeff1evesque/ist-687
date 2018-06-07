@@ -33,6 +33,29 @@ munge_ist687 <- function(source, filename) {
     df[,-which(names(df) == 'Second')]
   )
 
+  ##
+  ## year range: remove day, convert to year:month, then convert back to year:month:day
+  ##     to ensure the day portion starts at 1, to allow below increment by number of days
+  ##     in a month, via '+ monthDays(start_date1)'.
+  ##
+  start_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[5]), format='X%Y.%m'))
+  end_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[length(colnames(df))]), format='X%Y.%m'))
+
+  ## combine columns
+  while (start_date <= end_date) {
+    ## index of columns with 'Y.M' pattern
+    col_idx <- grep(paste0('X',format(start_date,"%Y.%m")),names(df))
+
+    ## create new aggregate columns: aggregated on month
+    df[, paste0(format(start_date,"%Y.%m"))] <- rowSums(df[,col_idx])
+
+    ## remove individual day columns
+    df <- df[, -(col_idx)]
+
+    ## increment loop
+    start_date <- start_date + monthDays(start_date)
+  }
+
   ## return dataframe
   return(df)
 }

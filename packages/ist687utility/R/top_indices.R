@@ -1,10 +1,11 @@
 ##
-## top_indices.R, determine n largest values in a vector,
+## top_indices.R, determine largest values in a vector,
 ##     and return the corresponding vector index.
 ##
-top_indices <- function(x, n=10){
-  nx <- length(x)
-  p <- nx-n
-  xp <- sort(x, partial=p)[p]
-  return(which(x > xp))
+top_indices <- function(v, end, start) {
+  if(missing(start)) {
+    start=0
+  }
+
+  return(order(v,decreasing=T)[start:end])
 }
