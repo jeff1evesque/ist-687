@@ -261,7 +261,7 @@ grid.arrange(
   nrow = 3,
   top = 'Top Articles per Month',
   bottom = textGrob(
-    'Jeffrey Levesque',
+    'Jesse Warren  + Jeffrey Levesque',
     gp = gpar(fontface = 3, fontsize = 9),
     hjust = 1,
     x = 1
