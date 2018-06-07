@@ -239,25 +239,58 @@ ggplot(data = average_top30.m, aes(x=variable, y=value, group=interaction(Articl
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ggsave(
+  'visualization/timeseries-individual-sub30-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## top 30-40 articles
+row_indices_40 <- top_indices(row_sums, 40, 30)
+average_top40.m <- melt(df[row_indices_40,-c(2)], id.var=c('Article', 'Language', 'Access'))
+
+ggplot(data = average_top40.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 30-40: Page views vs. Year.Month', color = 'Article') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
+  'visualization/timeseries-individual-sub40-pageviews.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## top 40-50 articles
+row_indices_50 <- top_indices(row_sums, 50, 40)
+average_top50.m <- melt(df[row_indices_50,-c(2)], id.var=c('Article', 'Language', 'Access'))
+
+ggplot(data = average_top50.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+  geom_line() +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 40-50: Page views vs. Year.Month', color = 'Article') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggsave(
   'visualization/timeseries-individual-sub50-pageviews.png',
   width = 16,
   height = 9,
   dpi = 100
 )
 
-## top 30-50 articles
-row_indices_50 <- top_indices(row_sums, 50, 30)
-average_top50.m <- melt(df[row_indices_50,-c(2)], id.var=c('Article', 'Language', 'Access'))
+## top 50-60 articles
+row_indices_60 <- top_indices(row_sums, 60, 50)
+average_top60.m <- melt(df[row_indices_60,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
-ggplot(data = average_top50.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
+ggplot(data = average_top60.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
   geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 30-50: Page views vs. Year.Month', color = 'Article') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Top 50-60: Page views vs. Year.Month', color = 'Article') +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  scale_x_discrete(name="")
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ggsave(
-  'visualization/timeseries-individual-sub50-pageviews.png',
+  'visualization/timeseries-individual-sub60-pageviews.png',
   width = 16,
   height = 9,
   dpi = 100
