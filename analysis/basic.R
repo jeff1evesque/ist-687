@@ -247,7 +247,7 @@ ggsave(
 
 ## top 30-50 articles
 row_indices_50 <- top_indices(row_sums, 50, 30)
-average_top50.m <- melt(df[row_indices_30,-c(2)], id.var=c('Article', 'Language', 'Access'))
+average_top50.m <- melt(df[row_indices_50,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
 ggplot(data = average_top50.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
   geom_line() +
