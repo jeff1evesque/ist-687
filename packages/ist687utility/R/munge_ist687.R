@@ -65,6 +65,8 @@ munge_ist687 <- function(source, filename) {
   df <- df[-grep('^SpÃ©cial:', df$Article),]
   df <- df[-grep('^Wikipedia:', df$Article),]
   df <- df[-grep('^WikipÃ©dia:', df$Article),]
+  df <- df[-grep('^Ğ¡Ğ»ÑfĞ¶ĞµĞ±Ğ½Ğ°Ñ:', df$Article)]
+  df <- df[-grep('^ç???¹å^¥:æ¤oç´¢', df$Article)]
 
   ## return dataframe
   return(df)
