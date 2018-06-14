@@ -56,6 +56,9 @@ munge_ist687 <- function(source, filename) {
     start_date <- start_date + monthDays(start_date)
   }
 
+  ## remove unrelated rows
+  df <- df[which(df$Article == 'Main_Page'),]
+
   ## return dataframe
   return(df)
 }
