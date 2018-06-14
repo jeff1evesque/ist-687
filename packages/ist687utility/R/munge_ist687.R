@@ -58,7 +58,11 @@ munge_ist687 <- function(source, filename) {
 
   ## remove unrelated rows
   df <- df[-which(df$Article == 'Main_Page'),]
-  df <- df[-which(df$Article == 'Special:Search'),]
+  df <- df[-which(df$Article == 'Main_page'),]
+  df <- df[-grep('^Special:', df$Article),]
+  df <- df[-grep('^Especial:', df$Article),]
+  df <- df[-grep('^Spezial:', df$Article),]
+  df <- df[-grep('^Spécial:', df$Article),]
 
   ## return dataframe
   return(df)
