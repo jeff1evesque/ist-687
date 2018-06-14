@@ -63,6 +63,7 @@ munge_ist687 <- function(source, filename) {
   df <- df[-grep('^Especial:', df$Article),]
   df <- df[-grep('^Spezial:', df$Article),]
   df <- df[-grep('^Spécial:', df$Article),]
+  df <- df[-grep('^Wikipedia:', df$Article),]
 
   ## return dataframe
   return(df)
