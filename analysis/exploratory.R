@@ -1,5 +1,5 @@
 ##
-## basic.R, analyze the the following wikipedia dataset:
+## exploratory.R, exploratory analysis on wikipedia traffic:
 ##
 ##     - https://www.dropbox.com/s/x14f3bg8flej1n7/train_1.csv?dl=1
 ##     - https://www.dropbox.com/s/o2df10dnyt3bg02/train_2.csv?dl=1
