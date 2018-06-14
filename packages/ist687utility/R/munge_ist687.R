@@ -57,7 +57,8 @@ munge_ist687 <- function(source, filename) {
   }
 
   ## remove unrelated rows
-  df <- df[which(df$Article == 'Main_Page'),]
+  df <- df[-which(df$Article == 'Main_Page'),]
+  df <- df[-which(df$Article == 'Special:Search'),]
 
   ## return dataframe
   return(df)
