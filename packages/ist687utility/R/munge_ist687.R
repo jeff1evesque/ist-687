@@ -62,7 +62,7 @@ munge_ist687 <- function(source, filename) {
   df <- df[-grep('^Spezial:', df$Article),]
   df <- df[-grep('^Wikipedia:', df$Article),]
 
-  ## load invalid nonstandard articles
+  ## load invalid article names
   df.invalid <- load_df('./invalid-articles.csv')
 
   ## remove unrelated rows: exact article
