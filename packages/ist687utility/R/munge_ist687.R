@@ -62,9 +62,12 @@ munge_ist687 <- function(source, filename) {
   df <- df[-grep('^Special:', df$Article),]
   df <- df[-grep('^Especial:', df$Article),]
   df <- df[-grep('^Spezial:', df$Article),]
-  df <- df[-grep('^Spécial:', df$Article),]
+  df <- df[-grep('^SpÃ©cial:', df$Article),]
   df <- df[-grep('^Wikipedia:', df$Article),]
-  df <- df[-grep('^Wikipédia:', df$Article),]
+  df <- df[-grep('^WikipÃ©dia:', df$Article),]
+  df <- df[-grep('^Ð—Ð°Ð³Ð»Ð°Ð²Ð½Ð°Ñ\u008f_Ñ\u0081Ñ‚Ñ€Ð°Ð½Ð¸Ñ†Ð°', df$Article),]
+  df <- df[-grep('^ãƒ¡ã‚¤ãƒ³ãƒšãƒ¼ã‚¸', df$Article),]
+  df <- df[-grep('^Ð¡Ð»ÑƒÐ¶ÐµÐ±Ð½Ð°Ñ\u008f:ÐŸÐ¾Ð¸Ñ\u0081Ðº', df$Article),]
 
   ## return dataframe
   return(df)
