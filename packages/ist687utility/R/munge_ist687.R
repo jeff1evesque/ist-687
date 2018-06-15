@@ -70,6 +70,7 @@ munge_ist687 <- function(source, filename) {
   df <- df[-grep('^Ð¡Ð»ÑƒÐ¶ÐµÐ±Ð½Ð°Ñ\u008f:ÐŸÐ¾Ð¸Ñ\u0081Ðº', df$Article),]
   df <- df[-grep('^ç‰¹åˆ¥:æ¤œç´¢', df$Article),]
   df <- df[-grep('^ãƒ¡ã‚¤ãƒ³ãƒšãƒ¼ã‚¸', df$Article),]
+  df <- df[-grep('^Ð¡Ð»ÑƒÐ¶ÐµÐ±Ð½Ð°Ñ\u008f:Ð¡Ñ\u0081Ñ‹Ð»ÐºÐ¸_Ñ\u0081ÑŽÐ´Ð°', df$Article),]
 
   ## return dataframe
   return(df)
