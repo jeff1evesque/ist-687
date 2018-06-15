@@ -62,23 +62,10 @@ munge_ist687 <- function(source, filename) {
   df <- df[-grep('^Special:', df$Article),]
   df <- df[-grep('^Especial:', df$Article),]
   df <- df[-grep('^Spezial:', df$Article),]
-  df <- df[-grep('^Spécial:', df$Article),]
   df <- df[-grep('^Wikipedia:', df$Article),]
-  df <- df[-grep('^Wikipédia:', df$Article),]
 
-  ## conditionally filter nonstandard results: japanese and russian
-  if (.Platform$OS.type == 'windows') {
-    df <- df[-grep('^SpÃ©cial:', df$Article),]
-    df <- df[-grep('^WikipÃ©dia:', df$Article),]
-  } else {
-    df <- df[-grep('^Spécial:', df$Article),]
-    df <- df[-grep('^Wikipédia:', df$Article),]
-    df <- df[-grep('^Заглавная_страница', df$Article),]
-    df <- df[-grep('^メインページ', df$Article),]
-    df <- df[-grep('^Служебная:Поиск', df$Article),]
-    df <- df[-grep('^特別:検索', df$Article),]
-    df <- df[-grep('^Служебная:Ссылки_сюда', df$Article),]
-  }
+  ## load invalid nonstandard articles
+  df.invalid <- load_df('./invalid.csv')
 
   ## return dataframe
   return(df)
