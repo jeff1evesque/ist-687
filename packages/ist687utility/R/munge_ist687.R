@@ -56,15 +56,19 @@ munge_ist687 <- function(source, filename) {
     start_date <- start_date + monthDays(start_date)
   }
 
-  ## remove unrelated rows
-  df <- df[-which(df$Article == 'Main_Page'),]
-  df <- df[-which(df$Article == 'Main_page'),]
+  ## remove unrelated rows: pattern match
   df <- df[-grep('^Special:', df$Article),]
   df <- df[-grep('^Especial:', df$Article),]
   df <- df[-grep('^Spezial:', df$Article),]
   df <- df[-grep('^Spécial:', df$Article),]
   df <- df[-grep('^Wikipedia:', df$Article),]
   df <- df[-grep('^Wikipédia:', df$Article),]
+
+  ## load invalid article names
+  df.invalid <- load_df('./invalid-articles.csv')
+
+  ## remove articles by name
+  df <- df[-which(df$Article %in% df.invalid),]
 
   ## return dataframe
   return(df)

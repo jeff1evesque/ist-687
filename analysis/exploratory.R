@@ -16,6 +16,9 @@ devtools::install_local(paste(cwd, sep='', '/packages/ist687utility'))
 library('ist687utility')
 
 ## load packages
+if (!require('stringi')) install.packages('stringi', repos='http://cran.rstudio.com/')
+library(stringi)
+
 load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2', 'grid', 'gridExtra'))
 
 ## create dataframes
