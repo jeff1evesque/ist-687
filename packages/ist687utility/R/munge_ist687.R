@@ -70,6 +70,10 @@ munge_ist687 <- function(source, filename) {
   ## remove articles by name
   df <- df[-which(df$Article %in% df.invalid),]
 
+  ## remove non-language rows
+  df <- df[-which(df$Language == 'www'),]
+  df <- df[-which(df$Language == 'commons'),]
+
   ## return dataframe
   return(df)
 }
