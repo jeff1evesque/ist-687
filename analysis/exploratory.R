@@ -118,6 +118,35 @@ ggsave(
   dpi = 100
 )
 
+## convert wide to long
+language.m <- melt(df[-c(1, 2, 3)], id='Language')
+
+## barchart: monthly page views by agent
+ggplot(language.m, aes(x=variable, y=value, fill=Language)) +
+  geom_bar(stat='identity') +
+  labs(x = 'Year.Month', y = 'Page views', title = 'Language: Page views vs. Year.Month') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/barchart-monthly-language.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
+## barchart: total page views by language
+ggplot(language.m, aes(x=Language, y=value)) +
+  geom_bar(stat='identity', position='dodge') +
+  labs(x = 'Language', y = 'Page views', title = 'Page views vs. Language') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(
+  'visualization/barchart-total-language.png',
+  width = 16,
+  height = 9,
+  dpi = 100
+)
+
 ##
 ## points: total page views by agent (density)
 ##
