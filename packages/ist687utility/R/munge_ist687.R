@@ -72,6 +72,7 @@ munge_ist687 <- function(source, filename) {
 
   ## remove any rows with non-language
   df <- df[-which(df$Language == 'www'),]
+  df <- df[-which(df$Language == 'commons'),]
 
   ## return dataframe
   return(df)
