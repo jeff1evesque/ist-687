@@ -31,29 +31,25 @@ df <- munge_ist687(
 access.m <- melt(df[-c(2, 3, 4)], id='Access')
 
 ## barchart: monthly page views by access
-ggplot(access.m, aes(x=variable, y=value, fill=Access)) +
-  geom_bar(stat='identity') +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Access: Page views vs. Year.Month') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
+gg_barchart(
+  access.m,
   'visualization/barchart-monthly-access.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+  'variable',
+  'value',
+  'Access',
+  'Year.Month',
+  'Page views'
 )
 
 ## barchart: total page views by access
-ggplot(access.m, aes(x=Access, y=value, fill=variable)) +
-  geom_bar(stat='identity') +
-  labs(x = 'Access type', y = 'Page views', title = 'Access: Page views vs. Type', color = 'Year.Month') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
+gg_barchart(
+  access.m,
   'visualization/barchart-total-access.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+  'Access',
+  'value',
+  'variable',
+  'Access type',
+  'Page views'
 )
 
 ##

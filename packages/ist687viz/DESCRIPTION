@@ -1,0 +1,10 @@
+Package: ist687viz
+Type: Package
+Title: Custom ggplot2 wrapper functions
+Version: 0.1.0
+Author: Jeffrey Levesque
+Maintainer: Jeffrey Levesque <jeff1evesque@yahoo.com>
+Description: Custom visualization wrapper functions using ggplot2.
+License: BSD
+LazyData: TRUE
+RoxygenNote: 5.0.1
