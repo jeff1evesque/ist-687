@@ -2,7 +2,7 @@
 ## gg_timeseries_interaction.R, generate ggplot2 point + bar chart, store
 ##      into png, then return corresponding ggplot object.
 ##
-gg_timeseries_interaction <- function(data, destfile, xlbl, ylbl, prefix) {
+gg_timeseries_interaction <- function(data, destfile, xlbl, ylbl, prefix=NULL) {
   ## generate ggplot
   if (prefix) {
     gg <- ggplot(data = data, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +

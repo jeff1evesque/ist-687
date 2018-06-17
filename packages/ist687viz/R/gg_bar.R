@@ -2,7 +2,7 @@
 ## gg_bar.R, generate ggplot2 barchart, store into png, then return
 ##     corresponding ggplot object.
 ##
-gg_bar <- function(data, destfile, xvar, yvar, xlbl, ylbl, afill, dodge) {
+gg_bar <- function(data, destfile, xvar, yvar, xlbl, ylbl, afill, dodge=NULL) {
 
   if (dodge) {
     ## generate ggplot
