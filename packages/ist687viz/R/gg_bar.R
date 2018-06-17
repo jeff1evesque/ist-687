@@ -3,17 +3,16 @@
 ##     corresponding ggplot object.
 ##
 gg_bar <- function(data, destfile, xvar, yvar, xlbl, ylbl, afill, dodge=NULL) {
-
-  if (dodge) {
+  if (is.null(dodge)) {
     ## generate ggplot
-    gg <- ggplot(data, aes(x=xvar, y=yvar, fill=afill)) +
-      geom_bar(stat='identity') +
+    gg <- ggplot(data, aes(x=xVar, y=yVar, fill=afill)) +
+      geom_bar(stat='identity', position=dodge) +
       labs(x = xlbl, y = ylbl, title = paste(ylbl, ' vs ', ylbl)) +
       theme(plot.title = element_text(hjust = 0.5))
   } else {
     ## generate ggplot
-    gg <- ggplot(data, aes(x=xVar, y=yVar, fill=afill)) +
-      geom_bar(stat='identity', position=dodge) +
+    gg <- ggplot(data, aes(x=xvar, y=yvar, fill=afill)) +
+      geom_bar(stat='identity') +
       labs(x = xlbl, y = ylbl, title = paste(ylbl, ' vs ', ylbl)) +
       theme(plot.title = element_text(hjust = 0.5))
   }

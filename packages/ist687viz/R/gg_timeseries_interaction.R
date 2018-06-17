@@ -4,18 +4,18 @@
 ##
 gg_timeseries_interaction <- function(data, destfile, xlbl, ylbl, prefix=NULL) {
   ## generate ggplot
-  if (prefix) {
+  if (is.null(prefix)) {
     gg <- ggplot(data = data, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
       geom_point() +
       geom_line() +
-      labs(x = xlbl, y = ylbl, title = paste(ylbl, ' vs ', ylbl)) +
+      labs(x = xlbl, y = ylbl, title = paste(prefix, ylbl, ' vs ', ylbl)) +
       theme(plot.title = element_text(hjust = 0.5)) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1))
   } else {
     gg <- ggplot(data = data, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
       geom_point() +
       geom_line() +
-      labs(x = xlbl, y = ylbl, title = paste(prefix, ylbl, ' vs ', ylbl)) +
+      labs(x = xlbl, y = ylbl, title = paste(ylbl, ' vs ', ylbl)) +
       theme(plot.title = element_text(hjust = 0.5)) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1))
   }
