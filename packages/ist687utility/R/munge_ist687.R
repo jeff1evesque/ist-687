@@ -63,6 +63,7 @@ munge_ist687 <- function(source, filename) {
   df <- df[-grep('^Spécial:', df$Article),]
   df <- df[-grep('^Wikipedia:', df$Article),]
   df <- df[-grep('^Wikipédia:', df$Article),]
+  df <- df[-grep('^Help:', df$Article),]
 
   ## load invalid article names
   df.invalid <- load_df('./invalid-articles.csv')
