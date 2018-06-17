@@ -1,2 +1,4 @@
 export(gg_bar)
 export(gg_point)
+export(gg_timeseries)
+export(gg_timeseries_interaction)
