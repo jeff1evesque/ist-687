@@ -162,18 +162,14 @@ gg_point(
 monthly_pageviews.m <- melt(colSums(df[,-c(1:4)]))
 
 ## time series: sum each row, aggregated per month
-ggplot(data = monthly_pageviews.m, aes(x=rownames(monthly_pageviews.m), y=value, group=1)) +
-  geom_point() +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Total: Page views vs. Year.Month') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-monthly-total-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries(
+  data=monthly_pageviews.m,
+  destfile='visualization/timeseries-monthly-total-pageviews.png',
+  xvar=rownames(monthly_pageviews.m),
+  yvar='value',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  agroup=1
 )
 
 ## time series: sum top 10 articles, aggregated per month
@@ -182,18 +178,13 @@ monthly_total_top10 <- data.frame(monthly_total_top10)
 colnames(monthly_total_top10) <- gsub('X', '', colnames(monthly_total_top10))
 monthly_total_top10.m <- melt(monthly_total_top10[,-c(1:4)])
 
-ggplot(data = monthly_total_top10.m, aes(x=variable, y=value, group=1)) +
-  geom_point() +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10 Sum: Page views vs. Year.Month') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-monthly-top10-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries(
+  data=monthly_total_top10.m,
+  destfile='visualization/timeseries-monthly-top10-pageviews.png',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  agroup=1,
+  prefix='Top 10 Sum: '
 )
 
 ##
@@ -208,100 +199,64 @@ row_sums <- rowSums(df[,-c(1:4)])
 row_indices_10 <- top_indices(row_sums, 10)
 average_top10.m <- melt(df[row_indices_10,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
-gg_timeseries_10 <- ggplot(data = average_top10.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10: Page views vs. Year.Month', color = 'Article') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-individual-top10-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries_interaction(
+  data=average_top10.m,
+  destfile='visualization/timeseries-individual-top10-pageviews.png',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  prefix='Top 10: '
 )
 
 ## top 10-20 articles
 row_indices_20 <- top_indices(row_sums, 20, 10)
 average_top20.m <- melt(df[row_indices_20,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
-ggplot(data = average_top20.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 10-20: Page views vs. Year.Month', color = 'Article') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-individual-sub20-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries_interaction(
+  data=average_top20.m,
+  destfile='visualization/timeseries-individual-sub20-pageviews.png',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  prefix='Top 10-20: '
 )
 
 ## top 20-30 articles
 row_indices_30 <- top_indices(row_sums, 30, 20)
 average_top30.m <- melt(df[row_indices_30,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
-ggplot(data = average_top30.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 20-30: Page views vs. Year.Month', color = 'Article') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-individual-sub30-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries_interaction(
+  data=average_top30.m,
+  destfile='visualization/timeseries-individual-sub30-pageviews.png',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  prefix='Top 20-30: '
 )
 
 ## top 30-40 articles
 row_indices_40 <- top_indices(row_sums, 40, 30)
 average_top40.m <- melt(df[row_indices_40,-c(2)], id.var=c('Article', 'Language', 'Access'))
 
-ggplot(data = average_top40.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 30-40: Page views vs. Year.Month', color = 'Article') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-individual-sub40-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries_interaction(
+  data=average_top40.m,
+  destfile='visualization/timeseries-individual-sub40-pageviews.png',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  prefix='Top 30-40: '
 )
 
 ## top 40-50 articles
-row_indices_50 <- top_indices(row_sums, 50, 40)
-average_top50.m <- melt(df[row_indices_50,-c(2)], id.var=c('Article', 'Language', 'Access'))
-
-ggplot(data = average_top50.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 40-50: Page views vs. Year.Month', color = 'Article') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-individual-sub50-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries_interaction(
+  data=average_top50.m,
+  destfile='visualization/timeseries-individual-sub50-pageviews.png',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  prefix='Top 40-50: '
 )
 
 ## top 50-60 articles
-row_indices_60 <- top_indices(row_sums, 60, 50)
-average_top60.m <- melt(df[row_indices_60,-c(2)], id.var=c('Article', 'Language', 'Access'))
-
-ggplot(data = average_top60.m, aes(x=variable, y=value, group=interaction(Article, Access), color=interaction(Article, Access))) +
-  geom_line() +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Top 50-60: Page views vs. Year.Month', color = 'Article') +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-ggsave(
-  'visualization/timeseries-individual-sub60-pageviews.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_timeseries_interaction(
+  data=average_top60.m,
+  destfile='visualization/timeseries-individual-sub60-pageviews.png',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  prefix='Top 50-60: '
 )
