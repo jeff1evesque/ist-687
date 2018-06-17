@@ -24,7 +24,7 @@ load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2', 'grid', 'gridExtra'))
 ## create dataframes
 df <- munge_ist687(
   'https://www.dropbox.com/s/x14f3bg8flej1n7/train_2.csv?dl=1',
-  './dataset/train_1.csv'
+  './dataset/train_2.csv'
 )
 
 ## convert wide to long
