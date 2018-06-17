@@ -13,7 +13,7 @@ munge_ist687 <- function(source, filename) {
   download_source(source, filename)
 
   ## create dataframe
-  df <- load_df('./dataset/train_1.csv')
+  df <- load_df(filename)
   
   ## explode column: Page column into two general columns
   df <- cbind(
