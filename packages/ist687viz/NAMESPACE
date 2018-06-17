@@ -1,1 +1,2 @@
-export(gg_barchart)
+export(gg_bar)
+export(gg_point)

@@ -1,11 +1,11 @@
 ##
-## gg_barchart.R, generate ggplot2 barchart, store into png, then return
+## gg_point.R, generate ggplot2 point chart, store into png, then return
 ##     corresponding ggplot object.
 ##
-gg_barchart <- function(data, destfile, xVar, yVar, afill, xlbl, ylbl) {
+gg_point <- function(data, destfile, xvar, yvar, xlbl, ylbl, afill, acolor) {
   ## generate ggplot
-  gg <- ggplot(data, aes(x=xVar, y=yVar, fill=afill)) +
-    geom_bar(stat='identity') +
+  gg <- ggplot(data, aes(x=xvar, y=yvar)) +
+    geom_point(aes(fill = afill, color=acolor), alpha = 0.35) +
     labs(x = xlbl, y = ylbl, title = paste(ylbl, ' vs ', ylbl)) +
     theme(plot.title = element_text(hjust = 0.5))
 

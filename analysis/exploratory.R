@@ -31,116 +31,101 @@ df <- munge_ist687(
 access.m <- melt(df[-c(2, 3, 4)], id='Access')
 
 ## barchart: monthly page views by access
-gg_barchart(
-  access.m,
-  'visualization/barchart-monthly-access.png',
-  'variable',
-  'value',
-  'Access',
-  'Year.Month',
-  'Page views'
+gg_bar(
+  data=access.m,
+  destfile='visualization/barchart-monthly-access.png',
+  xvar='variable',
+  yvar='value',
+  xlbl='Year.Month',
+  ylbl='Page views',
+  afill='Access'
 )
 
 ## barchart: total page views by access
-gg_barchart(
-  access.m,
-  'visualization/barchart-total-access.png',
-  'Access',
-  'value',
-  'variable',
-  'Access type',
-  'Page views'
+gg_bar(
+  data=access.m,
+  destfile='visualization/barchart-total-access.png',
+  xvar='Access',
+  yvar='value',
+  xlbl='Access type',
+  ylbl='Page views',
+  afill='variable'
 )
 
-##
 ## points: total page views by access (density)
-##
-## Note: boxplot renders very similar to points, since spread is
-##       very large, while the interquartile range relatively
-##       insignificant to the spread.
-##
-ggplot(access.m, aes(x=Access, y=value)) +
-  geom_point(aes(fill = Access, color = Access), alpha = 0.35) +
-  guides(fill=FALSE) +
-  labs(x = 'Total: Access type', y = 'Page views', title = 'Access: Page views vs. Type', color = 'Access') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/points-total-access.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_point(
+  data=access.m,
+  destfile='visualization/points-total-access.png',
+  xvar='Access',
+  yvar='value',
+  xlbl='Total: Access type',
+  ylbl='Page views',
+  afill='Access',
+  acolor='Access'
 )
 
 ## points: monthly page views by access (density)
-ggplot(access.m, aes(x = variable)) +
-  geom_point(aes(y = value, color = Access)) +
-  labs(x = 'Monthly: Access type', y = 'Page views', title = 'Access: Page views vs. Access type') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/points-monthly-access.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_point(
+  data=access.m,
+  destfile='visualization/points-total-access.png',
+  xvar='variable',
+  yvar='value',
+  xlbl='Monthly: Access type',
+  ylbl='Total: Access type',
+  afill='Access: Page views',
+  acolor='Access'
 )
 
 ## convert wide to long
 agent.m <- melt(df[-c(1, 3, 4)], id='Agent')
 
 ## barchart: monthly page views by agent
-ggplot(agent.m, aes(x=variable, y=value, fill=Agent)) +
-  geom_bar(stat='identity') +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Agent: Page views vs. Year.Month') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/barchart-monthly-agent.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_bar(
+  data=access.m,
+  destfile='visualization/barchart-monthly-agent.png',
+  xvar='variable',
+  yvar='value',
+  xlbl='Year.Month',
+  ylbl='Agent: Page views',
+  afill='Agent'
 )
 
 ## barchart: total page views by agent
-ggplot(agent.m, aes(x=Agent, y=value)) +
-  geom_bar(stat='identity', position='dodge') +
-  labs(x = 'Agent', y = 'Page views', title = 'Agent: Page views vs. Agent') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/barchart-total-agent.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_bar(
+  data=access.m,
+  destfile='visualization/barchart-total-agent.png',
+  xvar='Agent',
+  yvar='value',
+  xbl='Agent',
+  ylbl='Page views',
+  afill='Agent',
+  position='dodge'
 )
 
 ## convert wide to long
 language.m <- melt(df[-c(1, 2, 3)], id='Language')
 
 ## barchart: monthly page views by agent
-ggplot(language.m, aes(x=variable, y=value, fill=Language)) +
-  geom_bar(stat='identity') +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Language: Page views vs. Year.Month') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/barchart-monthly-language.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_bar(
+  data=language.m,
+  destfile='visualization/barchart-monthly-language.png',
+  xvar='variable',
+  yvar='value',
+  xbl='Year.Month',
+  ylbl='Language: Page views',
+  afill='Language'
 )
 
 ## barchart: total page views by language
-ggplot(language.m, aes(x=Language, y=value)) +
-  geom_bar(stat='identity', position='dodge') +
-  labs(x = 'Language', y = 'Page views', title = 'Page views vs. Language') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/barchart-total-language.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_bar(
+  data=language.m,
+  destfile='visualization/barchart-total-language.png',
+  xvar='Language',
+  yvar='value',
+  xbl='Language',
+  ylbl='Language: Page views',
+  afill='Language',
+  position='dodge'
 )
 
 ##
@@ -150,30 +135,27 @@ ggsave(
 ##       very large, while the interquartile range relatively
 ##       insignificant to the spread.
 ##
-ggplot(agent.m, aes(x=Agent, y=value)) +
-  geom_point(aes(fill = Agent, color = Agent), alpha = 0.35) +
-  guides(fill=FALSE) +
-  labs(x = 'Total: Agent type', y = 'Page views', title = 'Agent: Page views vs. Type', color = 'Agent') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/points-total-agent.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_point(
+  data=agent.m,
+  destfile='visualization/points-total-agent.png',
+  xvar='Agent',
+  yvar='value',
+  xlbl='Total: Agent type',
+  ylbl='Agent: Page views',
+  afill='Access: Page views',
+  acolor='Agent'
 )
 
 ## points: monthly page views by agent (density)
-ggplot(agent.m, aes(x = variable)) +
-  geom_point(aes(y = value, color = Agent)) +
-  labs(x = 'Monthly: Agent type', y = 'Page views', title = 'Agent: Page views vs. Type') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/points-monthly-agent.png',
-  width = 16,
-  height = 9,
-  dpi = 100
+gg_point(
+  data=agent.m,
+  destfile='visualization/points-monthly-agent.png',
+  xvar='variable',
+  yvar='value',
+  xlbl='Monthly: Agent type',
+  ylbl='Agent: Page views',
+  afill='black',
+  acolor='Agent'
 )
 
 ## convert wide to long
