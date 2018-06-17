@@ -2,7 +2,7 @@
 ## gg_timeseries.R, generate ggplot2 point + bar chart, store into png,
 ##     then return corresponding ggplot object.
 ##
-gg_point <- function(data, destfile, xvar, yvar, xlbl, ylbl, agroup, prefix) {
+gg_timeseries <- function(data, destfile, xvar, yvar, xlbl, ylbl, agroup, prefix) {
   ## generate ggplot
   if (prefix) {
     gg <- ggplot(data = data, aes(x=xvar, y=yvar, group=agroup)) +

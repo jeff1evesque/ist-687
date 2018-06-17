@@ -15,6 +15,10 @@ if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
 devtools::install_local(paste(cwd, sep='', '/packages/ist687utility'))
 library('ist687utility')
 
+## ggmap wrapper functions
+devtools::install_local(paste(cwd, sep='', '/packages/ist687viz'))
+library('ist687viz')
+
 ## load packages
 if (!require('stringi')) install.packages('stringi', repos='http://cran.rstudio.com/')
 library(stringi)
