@@ -1,8 +1,8 @@
 ##
-## exploratory.R, exploratory analysis on wikipedia traffic:
+## exploratory.R, ARIMA analysis on wikipedia traffic:
 ##
-##     - https://www.dropbox.com/s/x14f3bg8flej1n7/train.csv?dl=1
-##     - https://www.dropbox.com/s/o2df10dnyt3bg02/test.csv?dl=1
+##     - https://www.dropbox.com/s/x14f3bg8flej1n7/train-wikipedia.csv?dl=1
+##     - https://www.dropbox.com/s/o2df10dnyt3bg02/test-wikipedia.csv?dl=1
 ##
 
 ## set project cwd: only execute in RStudio
@@ -23,6 +23,6 @@ load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2', 'grid', 'gridExtra'))
 
 ## create dataframes
 df <- munge_ist687(
-  'https://www.dropbox.com/s/x14f3bg8flej1n7/train.csv?dl=1',
+  'https://www.dropbox.com/s/x14f3bg8flej1n7/train-wikipedia.csv?dl=1',
   './dataset/train.csv'
 )
