@@ -57,7 +57,7 @@ munge_ist687 <- function(source, filename) {
     df <- df[-grep(pattern, colnames(df)),]
   } else if (splitter[1] == '9' && splitter[2] == '30') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '10'splitter[2] == '31') {
+  } else if (splitter[1] == '10' && splitter[2] == '31') {
     df <- df[-grep(pattern, colnames(df)),]
   } else if (splitter[1] == '11' && splitter[2] == '30') {
     df <- df[-grep(pattern, colnames(df)),]
