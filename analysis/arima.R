@@ -33,4 +33,13 @@ rSums <- rowSums(df[,-c(1:4)])
 ## top article
 rIndex.1 <- top_indices(rSums, 1, 1)
 avgTop1.m <- melt(df[rIndex.1, -c(2, 4)], id.var=c('Access', 'Article'))
-avgTop1.m$value <- ts(avgTop1.m$value, start=c(2015, 1), end=c(2016, 12), frequency=12)
+avgTop1.m$value <- ts(avgTop1.m$value, start=c(2015, 7), frequency=18)
+
+## first difference: difference between one successive month
+ts.d <- diff(avgTop1.m$value, 1)
+
+## generate ar model
+fit.ts.ar <- arima(avgTop1.m, order=c(1, 0, 0))
+
+plot(avgTop1.m)
+
