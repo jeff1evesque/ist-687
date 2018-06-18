@@ -26,3 +26,11 @@ df <- munge_ist687(
   'https://www.dropbox.com/s/x14f3bg8flej1n7/train-wikipedia.csv?dl=1',
   './dataset/train.csv'
 )
+
+## row sums: determine sum for each row
+rSums <- rowSums(df[,-c(1:4)])
+
+## top article
+rIndex.1 <- top_indices(rSums, 1, 1)
+avgTop1.m <- melt(df[rIndex.1, -c(2, 4)], id.var=c('Access', 'Article'))
+avgTop1.m$value <- ts(avgTop1.m$value, start=c(2015, 1), end=c(2016, 12), frequency=12)
