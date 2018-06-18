@@ -19,7 +19,7 @@ library('ist687utility')
 if (!require('stringi')) install.packages('stringi', repos='http://cran.rstudio.com/')
 library(stringi)
 
-load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2', 'grid', 'gridExtra'))
+load_package(c('zoo', 'Hmisc', 'forecast'))
 
 ## create dataframes
 df <- munge_ist687(
