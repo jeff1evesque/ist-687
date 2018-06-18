@@ -34,78 +34,36 @@ munge_ist687 <- function(source, filename) {
   )
 
   ## get last date column
-  last_date <- colnames(df[,ncol(df)])
-  splitter <- strsplit(last_date,split='/', fixed=TRUE)
-  pattern <- paste('^', splitter[1], '/*/', splitter[3], '$')
+  last_date <- colnames(df)[ncol(df)]
+  splitter <- strsplit(as.character(last_date), split='.', fixed=TRUE)
+  pattern <- paste('^', splitter[[1]][1], '.*.', splitter[[1]][3], '$')
 
   ## remove columns by mm/xx/yyyy, if month is not full
-  if (splitter[1] == '1' && splitter[2] != '31') {
+  if (splitter[[1]][1] == '1' && splitter[[1]][2] != '31') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '2' && (splitter[2] != '28' || splitter[2] != '29')) {
+  } else if (splitter[[1]][1] == '2' && (splitter[[1]][2] != '28' || splitter[[1]][2] != '29')) {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '3' && splitter[2] == '31') {
+  } else if (splitter[[1]][1] == '3' && splitter[[1]][2] == '31') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '4' && splitter[2] == '30') {
+  } else if (splitter[[1]][1] == '4' && splitter[[1]][2] == '30') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '5' && splitter[2] == '31') {
+  } else if (splitter[[1]][1] == '5' && splitter[[1]][2] == '31') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '6' && splitter[2] == '30') {
+  } else if (splitter[[1]][1] == '6' && splitter[[1]][2] == '30') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '7' && splitter[2] == '31') {
+  } else if (splitter[[1]][1] == '7' && splitter[[1]][2] == '31') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '8' && splitter[2] == '31') {
+  } else if (splitter[[1]][1] == '8' && splitter[[1]][2] == '31') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '9' && splitter[2] == '30') {
+  } else if (splitter[[1]][1] == '9' && splitter[[1]][2] == '30') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '10' && splitter[2] == '31') {
+  } else if (splitter[[1]][1] == '10' && splitter[[1]][2] == '31') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '11' && splitter[2] == '30') {
+  } else if (splitter[[1]][1] == '11' && splitter[[1]][2] == '30') {
     df <- df[-grep(pattern, colnames(df)),]
-  } else if (splitter[1] == '12' && splitter[2] == '31') {
+  } else if (splitter[[1]][1] == '12' && splitter[[1]][2] == '31') {
     df <- df[-grep(pattern, colnames(df)),]
   }
-
-  ##
-  ## year range: remove day, convert to year:month, then convert back to year:month:day
-  ##     to ensure the day portion starts at 1, to allow below increment by number of days
-  ##     in a month, via '+ monthDays(start_date1)'.
-  ##
-  start_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[5]), format='X%Y.%m'))
-  end_date <- as.Date(as.yearmon(sub('\\.[^.]+$', '', colnames(df)[length(colnames(df))]), format='X%Y.%m'))
-
-  ## combine columns
-  while (start_date <= end_date) {
-    ## index of columns with 'Y.M' pattern
-    col_idx <- grep(paste0('X',format(start_date,"%Y.%m")),names(df))
-
-    ## create new aggregate columns: aggregated on month
-    df[, paste0(format(start_date,"%Y.%m"))] <- rowSums(df[,col_idx])
-
-    ## remove individual day columns
-    df <- df[, -(col_idx)]
-
-    ## increment loop
-    start_date <- start_date + monthDays(start_date)
-  }
-
-  ## remove unrelated rows: pattern match
-  df <- df[-grep('^Special:', df$Article),]
-  df <- df[-grep('^Especial:', df$Article),]
-  df <- df[-grep('^Spezial:', df$Article),]
-  df <- df[-grep('^Spécial:', df$Article),]
-  df <- df[-grep('^Wikipedia:', df$Article),]
-  df <- df[-grep('^Wikipédia:', df$Article),]
-  df <- df[-grep('^Help:', df$Article),]
-
-  ## load invalid article names
-  df.invalid <- load_df('./invalid-articles.csv')
-
-  ## remove articles by name
-  df <- df[-which(df$Article %in% df.invalid),]
-
-  ## remove non-language rows
-  df <- df[-which(df$Language == 'www'),]
-  df <- df[-which(df$Language == 'commons'),]
 
   ## return dataframe
   return(df)
