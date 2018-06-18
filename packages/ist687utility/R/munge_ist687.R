@@ -33,6 +33,45 @@ munge_ist687 <- function(source, filename) {
     df[,-which(names(df) == 'Second')]
   )
 
+  ## get last date column
+  last_date <- colnames(df)[ncol(df)]
+  splitter <- strsplit(as.character(last_date), split='.', fixed=TRUE)
+  pattern <- paste0('^', splitter[[1]][1], '\\.', splitter[[1]][2], '\\.[0-9]{2}', '$')
+
+  ##
+  ## remove columns by XYYYY.MM.xx, where xx is any arbitrary day value,
+  ##     if the given month doesn't have the maximum number of days.
+  ##
+  ## Note: the below logic should count the number of days in the month,
+  ##       rather than checking if the last column, has a day value equal
+  ##       to the maximum number of days in the corresponding month.
+  ##
+  if (splitter[[1]][2] == '01' && splitter[[1]][3] != '31') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '02' && (splitter[[1]][3] != '28' || splitter[[1]][3] != '29')) {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '03' && splitter[[1]][3] != '31') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '04' && splitter[[1]][3] != '30') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '05' && splitter[[1]][3] != '31') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '06' && splitter[[1]][3] != '30') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '07' && splitter[[1]][3] != '31') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '08' && splitter[[1]][3] != '31') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '09' && splitter[[1]][3] != '30') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '10' && splitter[[1]][3] != '31') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '11' && splitter[[1]][3] != '30') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  } else if (splitter[[1]][2] == '12' && splitter[[1]][3] != '31') {
+    df <- df[,-grep(pattern, colnames(df), value = FALSE)]
+  }
+
   ##
   ## year range: remove day, convert to year:month, then convert back to year:month:day
   ##     to ensure the day portion starts at 1, to allow below increment by number of days
