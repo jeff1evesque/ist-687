@@ -35,14 +35,33 @@ rIndex.1 <- top_indices(rSums, 1, 1)
 avgTop1.m <- melt(df[rIndex.1, -c(1:4)])
 avgTop1.m$value <- ts(avgTop1.m$value, start=c(2015, 7), frequency=18)
 
+##
 ## first difference: difference between one successive month
+##
+## Note: this is similar to the second argument to the 'arima'
+##       function, implemented below.
+##
 ts.d <- diff(avgTop1.m$value, 1)
 
 ## plot series
 plot(ts.d)
 
-## generate ar model
-fit.ts.ar <- arima(avgTop1.m$value, order=c(1, 0, 0))
+##
+## generate ARI model:
+##
+## Note: the arima arguments include:
+##
+## AR: autoregression, use the dependent relationship between an observation
+##     and some number of lagged observations.
+##
+## I: integrated, use of differencing of raw observations, or subtracting an
+##     observation from one at the previous time step. The goal is to attain a
+##     time series that is stationary.
+##
+## MA: moving average, uses the dependency between an observation and a residual
+##     error from a moving average model applied to lagged observations.
+##
+fit.ts.ar <- arima(avgTop1.m$value, order=c(6, 1, 0))
 
 ## generate forecast: we only have 18 periods
 fit.ts.arf <- forecast(fit.ts.ar, h=18)
