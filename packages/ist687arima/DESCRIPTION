@@ -1,0 +1,10 @@
+Package: ist687arima
+Type: Package
+Title: Arima analysis functions
+Version: 0.1.0
+Author: Jeffrey Levesque
+Maintainer: Jeffrey Levesque <jeff1evesque@yahoo.com>
+Description: Generalized arima analysis functions.
+License: BSD
+LazyData: TRUE
+RoxygenNote: 5.0.1
