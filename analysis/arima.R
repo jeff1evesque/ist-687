@@ -30,7 +30,8 @@ df <- munge_ist687(
 ## row sums: determine sum for each row
 rSums <- rowSums(df[,-c(1:4)])
 
-## top article
-rIndex.1 <- top_indices(rSums, 1, 1)
-arima_ist687(df[rIndex.1, -c(1:4)], 6, 1, 0, 18)
-
+## top 5 articles
+for (i in 1:length(5)) {
+  rIndex <- top_indices(rSums, i, i)
+  arima_ist687(df[rIndex, -c(1:4)], 6, 1, 0, 18)
+}
