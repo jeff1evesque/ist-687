@@ -1,5 +1,5 @@
 ##
-## exploratory.R, ARIMA analysis on wikipedia traffic:
+## arima.R, ARIMA analysis on wikipedia traffic:
 ##
 ##     - https://www.dropbox.com/s/x14f3bg8flej1n7/train-wikipedia.csv?dl=1
 ##     - https://www.dropbox.com/s/o2df10dnyt3bg02/test-wikipedia.csv?dl=1
@@ -14,6 +14,10 @@ if (nzchar(Sys.getenv('RSTUDIO_USER_IDENTITY'))) {
 ## utility functions
 devtools::install_local(paste(cwd, sep='', '/packages/ist687utility'))
 library('ist687utility')
+
+## arima functions
+devtools::install_local(paste(cwd, sep='', '/packages/ist687arima'))
+library('ist687arima')
 
 ## load packages
 if (!require('stringi')) install.packages('stringi', repos='http://cran.rstudio.com/')
