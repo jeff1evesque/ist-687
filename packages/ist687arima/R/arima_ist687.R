@@ -3,8 +3,7 @@
 ##
 arima_ist687 <- function(data, ar, i, ma, periods) {
   ## generate timeseries
-  avgTop.m <- melt(data)
-  avgTop.m$value <- ts(avgTop.m$value, start=c(2015, 7), frequency=18)
+  ts.data <- ts(data, start=c(2015, 07), frequency=18)
 
   ##
   ## ith difference: difference between one successive month
@@ -12,10 +11,10 @@ arima_ist687 <- function(data, ar, i, ma, periods) {
   ## Note: this is similar to the second argument to the 'arima'
   ##       function, implemented below.
   ##
-  ts.d <- diff(ts, i)
+  ts.diff <- diff(ts.data, i)
 
   ## plot series
-  plot(ts.d)
+  plot(ts.diff)
 
   ##
   ## generate ARI(MA) model:
@@ -32,7 +31,7 @@ arima_ist687 <- function(data, ar, i, ma, periods) {
   ##     MA: moving average, uses the dependency between an observation and a residual
   ##         error from a moving average model applied to lagged observations.
   ##
-  fit.ts.ar <- arima(avgTop.m$value, order=c(ar, i, ma))
+  fit.ts.ar <- arima(data, order=c(ar, i, ma))
 
   ## generate forecast: we only have 18 periods
   fit.ts.arf <- forecast(fit.ts.ar, h=periods)
