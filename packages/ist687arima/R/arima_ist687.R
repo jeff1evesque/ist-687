@@ -1,14 +1,14 @@
 ##
 ## arima_ist687.R, generate arima model, forecast, visualization, and prediction.
 ##
-arima_ist687 <- function(data, ar, i, ma, periods) {
+arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
   ## generate timeseries
   ts.data <- ts(data, start=c(2015, 07), frequency=18)
   ts.diff <- diff(ts.data, 1)
 
   ## create timeseries png
   png(
-    paste0('visualization/timeseries-top-', i, '.jpg'),
+    paste0('visualization/timeseries-top-', suffix, '.jpg'),
     width = 1200,
     height = 600
   )
@@ -41,7 +41,7 @@ arima_ist687 <- function(data, ar, i, ma, periods) {
 
   ## create timeseries png
   png(
-    paste0('visualization/timeseries-forecasts-top-', i, '.jpg'),
+    paste0('visualization/timeseries-forecasts-top-', suffix, '.jpg'),
     width = 1200,
     height = 600
   )
