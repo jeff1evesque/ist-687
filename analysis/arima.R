@@ -34,8 +34,8 @@ df <- munge_ist687(
 ## row sums: determine sum for each row
 rSums <- rowSums(df[,-c(1:4)])
 
-## top 5 articles
-for (i in 1:5) {
+## top 1-5, 10-15 articles
+for (i in c(1:5,10:15)) {
   rIndex <- top_indices(rSums, i, i)
   avgTop.m <- melt(df[rIndex, -c(2,4)])
   article.name <- avgTop.m[i, which(colnames(avgTop.m) == 'Article')]
