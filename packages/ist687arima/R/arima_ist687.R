@@ -37,7 +37,7 @@ arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
   fit.ts.ar <- arima(as.matrix(data), order=c(ar, i, ma))
 
   ## generate forecast: we only have 18 periods
-  fit.ts.arf <- forecast(fit.ts.ar, h=periods, levels=c(90, 95))
+  fit.ts.arf <- forecast(fit.ts.ar, h=periods, level=c(80, 90, 95))
 
   ## create timeseries png
   png(
