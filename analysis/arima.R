@@ -35,8 +35,8 @@ df <- munge_ist687(
 rSums <- rowSums(df[,-c(1:4)])
 
 ## top 5 articles
-for (i in 1:length(5)) {
-  rIndex <- top_indices(rSums, 1, 1)
+for (i in 1:5) {
+  rIndex <- top_indices(rSums, i, i)
   avgTop.m <- melt(df[rIndex, -c(1:4)])
   arima_ist687(avgTop.m$value, 6, 1, 0, 18)
 }
