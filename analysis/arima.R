@@ -37,7 +37,15 @@ rSums <- rowSums(df[,-c(1:4)])
 ## top 5 articles
 for (i in 1:5) {
   rIndex <- top_indices(rSums, i, i)
-  avgTop.m <- melt(df[rIndex, -c(1,2,4)])
+  avgTop.m <- melt(df[rIndex, -c(2,4)])
   article.name <- avgTop.m[i, which(colnames(avgTop.m) == 'Article')]
-  arima_ist687(avgTop.m$value, ar=6, i=1, ma=0, periods=18, suffix=paste0(i, '--', article.name))
+  article.access <- avgTop.m[i, which(colnames(avgTop.m) == 'Access')]
+  arima_ist687(
+    avgTop.m$value,
+    ar=6,
+    i=1,
+    ma=0,
+    periods=18,
+    suffix=paste0(i, '--', article.name, '-', article.access)
+  )
 }
