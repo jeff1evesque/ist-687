@@ -35,11 +35,16 @@ df <- munge_ist687(
 rSums <- rowSums(df[,-c(1:4)])
 
 ## top 1-5, 10-15 articles
-for (i in c(1:5,10:15)) {
+for (i in c(1:5, 11:15)) {
   rIndex <- top_indices(rSums, i, i)
   avgTop.m <- melt(df[rIndex, -c(2,4)])
   article.name <- avgTop.m[i, which(colnames(avgTop.m) == 'Article')]
   article.access <- avgTop.m[i, which(colnames(avgTop.m) == 'Access')]
+
+  ## remove special characters
+  article.name <- gsub('[^[^0-9A-Za-z_]', '', article.name, ignore.case = TRUE)
+  article.access <- gsub('[^0-9A-Za-z_]', '', article.access, ignore.case = TRUE)
+
   arima_ist687(
     avgTop.m$value,
     ar=6,
