@@ -34,7 +34,11 @@ arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
   ##     MA: moving average, uses the dependency between an observation and a residual
   ##         error from a moving average model applied to lagged observations.
   ##
-  fit.ts.ar <- arima(as.matrix(data), order=c(ar, i, ma))
+  ##  Note: the default 'CSS' (i.e. conditional sum of squares), was replaced with the
+  ##        the 'ML' (i.e. maximum likelihood estimation). This should provide better
+  ##        estimates, at the compromise of computing time.
+  ##
+  fit.ts.ar <- arima(as.matrix(data), order=c(ar, i, ma), method='ML')
 
   ## generate forecast: we only have 18 periods
   fit.ts.arf <- forecast(fit.ts.ar, h=periods, level=c(80, 90, 95))
