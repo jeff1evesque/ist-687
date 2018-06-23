@@ -43,6 +43,9 @@ arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
   ## generate forecast: we only have 18 periods
   fit.ts.arf <- forecast(fit.ts.ar, h=periods, level=c(80, 90, 95))
 
+  ## generate prediction: 12 timeperiods (i.e. 1 year)
+  pred <- predict(fit.ts.ar, n.ahead=12)
+
   ## create timeseries png
   png(
     paste0('visualization/timeseries-forecasts-top-', suffix, '.jpg'),
@@ -55,4 +58,9 @@ arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
 
   ## close current plot
   dev.off()
+
+  ## generate prediction
+  conn <- file(paste0('visualization/timeseries-prediction-top-', suffix, '.txt'))
+  writeLines(paste(pred$pred), conn)
+  close(conn)
 }
