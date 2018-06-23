@@ -1,8 +1,7 @@
 ##
 ## exploratory.R, exploratory analysis on wikipedia traffic:
 ##
-##     - https://www.dropbox.com/s/x14f3bg8flej1n7/train_1.csv?dl=1
-##     - https://www.dropbox.com/s/o2df10dnyt3bg02/train_2.csv?dl=1
+##     - https://www.dropbox.com/s/o2df10dnyt3bg02/test-wikipedia.csv?dl=1
 ##
 
 ## set project cwd: only execute in RStudio
@@ -23,8 +22,8 @@ load_package(c('reshape2', 'zoo', 'Hmisc', 'ggplot2', 'grid', 'gridExtra'))
 
 ## create dataframes
 df <- munge_ist687(
-  'https://www.dropbox.com/s/x14f3bg8flej1n7/train_2.csv?dl=1',
-  './dataset/train_2.csv'
+  'https://www.dropbox.com/s/x14f3bg8flej1n7/test-wikipedia.csv?dl=1',
+  './dataset/test.csv'
 )
 
 ## convert wide to long
@@ -90,38 +89,9 @@ ggsave(
 )
 
 ## convert wide to long
-agent.m <- melt(df[-c(1, 3, 4)], id='Agent')
-
-## barchart: monthly page views by agent
-ggplot(agent.m, aes(x=variable, y=value, fill=Agent)) +
-  geom_bar(stat='identity') +
-  labs(x = 'Year.Month', y = 'Page views', title = 'Agent: Page views vs. Year.Month') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/barchart-monthly-agent.png',
-  width = 16,
-  height = 9,
-  dpi = 100
-)
-
-## barchart: total page views by agent
-ggplot(agent.m, aes(x=Agent, y=value)) +
-  geom_bar(stat='identity', position='dodge') +
-  labs(x = 'Agent', y = 'Page views', title = 'Agent: Page views vs. Agent') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/barchart-total-agent.png',
-  width = 16,
-  height = 9,
-  dpi = 100
-)
-
-## convert wide to long
 language.m <- melt(df[-c(1, 2, 3)], id='Language')
 
-## barchart: monthly page views by agent
+## barchart: monthly page views by Language
 ggplot(language.m, aes(x=variable, y=value, fill=Language)) +
   geom_bar(stat='identity') +
   labs(x = 'Year.Month', y = 'Page views', title = 'Language: Page views vs. Year.Month') +
@@ -142,39 +112,6 @@ ggplot(language.m, aes(x=Language, y=value)) +
 
 ggsave(
   'visualization/barchart-total-language.png',
-  width = 16,
-  height = 9,
-  dpi = 100
-)
-
-##
-## points: total page views by agent (density)
-##
-## Note: boxplot renders very similar to points, since spread is
-##       very large, while the interquartile range relatively
-##       insignificant to the spread.
-##
-ggplot(agent.m, aes(x=Agent, y=value)) +
-  geom_point(aes(fill = Agent, color = Agent), alpha = 0.35) +
-  guides(fill=FALSE) +
-  labs(x = 'Total: Agent type', y = 'Page views', title = 'Agent: Page views vs. Type', color = 'Agent') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/points-total-agent.png',
-  width = 16,
-  height = 9,
-  dpi = 100
-)
-
-## points: monthly page views by agent (density)
-ggplot(agent.m, aes(x = variable)) +
-  geom_point(aes(y = value, color = Agent)) +
-  labs(x = 'Monthly: Agent type', y = 'Page views', title = 'Agent: Page views vs. Type') +
-  theme(plot.title = element_text(hjust = 0.5))
-
-ggsave(
-  'visualization/points-monthly-agent.png',
   width = 16,
   height = 9,
   dpi = 100

@@ -114,6 +114,9 @@ munge_ist687 <- function(source, filename) {
   df <- df[-which(df$Language == 'www'),]
   df <- df[-which(df$Language == 'commons'),]
 
+  ## remove all-access columns
+  df <- df[-which(df$Access == 'all-access'),]
+
   ## return dataframe
   return(df)
 }
