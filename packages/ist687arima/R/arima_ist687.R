@@ -1,7 +1,7 @@
 ##
 ## arima_ist687.R, generate arima model, forecast, visualization, and prediction.
 ##
-arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
+arima_ist687 <- function(data, ar, i, ma, periods, ahead, suffix) {
   ## generate timeseries
   ts.data <- ts(data, start=c(2015, 07), frequency=18)
   ts.diff <- diff(ts.data, 1)
@@ -43,8 +43,8 @@ arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
   ## generate forecast: we only have 18 periods
   fit.ts.arf <- forecast(fit.ts.ar, h=periods, level=c(80, 90, 95))
 
-  ## generate prediction: 12 timeperiods (i.e. 1 year)
-  pred <- predict(fit.ts.ar, n.ahead=12)
+  ## generate prediction: 8 timeperiods (i.e. 8 months)
+  pred <- predict(fit.ts.ar, n.ahead=ahead)
 
   ## create timeseries png
   png(
