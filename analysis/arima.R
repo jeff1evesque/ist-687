@@ -31,7 +31,7 @@ df.train <- munge_ist687(
   './dataset/train.csv'
 )
 df.test <- munge_ist687(
-  'https://www.dropbox.com/s/x14f3bg8flej1n7/test-wikipedia.csv?dl=1',
+  'https://www.dropbox.com/s/o2df10dnyt3bg02/test-wikipedia.csv?dl=1',
   './dataset/test.csv'
 )
 
