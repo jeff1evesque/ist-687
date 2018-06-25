@@ -52,7 +52,7 @@ for (i in c(1:5, 11:15)) {
   ##
   ## determine predicted time periods
   ##
-  ## Note: the train should be a continuous superset of the test dataset
+  ## Note: the test should be a continuous superset of the train dataset
   ##
   train.period <- ncol(df.test) - ncol(df.train)
 
