@@ -20,10 +20,10 @@ devtools::install_local(paste(cwd, sep='', '/packages/ist687arima'))
 library('ist687arima')
 
 ## load packages
-if (!require('stringi')) install.packages('stringi', repos='http://cran.rstudio.com/')
+if (!require('stringi')) install.packagesgit ('stringi', repos='http://cran.rstudio.com/')
 library(stringi)
 
-load_package(c('reshape2', 'zoo', 'Hmisc', 'forecast'))
+load_package(c('reshape2', 'zoo', 'Hmisc', 'forecast', 'lmtest'))
 
 ## create dataframes
 df.train <- munge_ist687(
@@ -49,12 +49,28 @@ for (i in c(1:5, 11:15)) {
   article.name <- gsub('[^[^0-9A-Za-z_]', '', article.name, ignore.case = TRUE)
   article.access <- gsub('[^0-9A-Za-z_]', '', article.access, ignore.case = TRUE)
 
+  ##
+  ## determine predicted time periods
+  ##
+  ## Note: the train should be a continuous superset of the test dataset
+  ##
+  train.period <- ncol(df.test) - ncol(df.train)
+
+  ##
+  ## predict 8 time periods (i.e. months) ahead of the train dataset.
+  ##
+  ## Note: predicted time periods should exist in the test dataset
+  ##
   prediction <- arima_ist687(
     avgTop.m$value,
     ar=6,
     i=1,
     ma=0,
     periods=18,
+    ahead=train.period,
     suffix=paste0(i, '--', article.name, '-', article.access)
   )
+
+  ## compare prediction against train
+  grangertest(prediction, df.train[rIndex, -c(2,4)])
 }
