@@ -59,8 +59,6 @@ arima_ist687 <- function(data, ar, i, ma, periods, suffix) {
   ## close current plot
   dev.off()
 
-  ## generate prediction
-  conn <- file(paste0('visualization/timeseries-prediction-top-', suffix, '.txt'))
-  writeLines(paste(pred$pred), conn)
-  close(conn)
+  ## return prediction
+  return(pred$pred)
 }
