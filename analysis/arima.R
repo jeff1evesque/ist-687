@@ -81,4 +81,16 @@ for (i in c(1:5, 11:15)) {
     x=c(prediction),
     y=unlist(df.train[row, from:to])
   )
+
+  ##
+  ## record grangertest
+  ##
+  ## Note: sample granger implementation can be reviewed per
+  ##
+  ##       http://www.maths.usyd.edu.au/u/jchan/Consult/W10_CompareTwoTimeSeries.pdf
+  ##
+  conn <- file(paste0('visualization/grangertest-', i, '--', article.name, '-', article.access, '.txt'))
+  data.frame(granger)
+  writeLines(paste(names(unlist(granger)), ',', unlist(granger), sep=''), conn)
+  close(conn)
 }
