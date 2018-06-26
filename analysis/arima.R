@@ -72,5 +72,13 @@ for (i in c(1:5, 11:15)) {
   )
 
   ## compare prediction against train
-  grangertest(prediction, df.train[rIndex, -c(2,4)])
+  row <- rIndex
+  ncols <- ncol(df.train)
+  from <- (ncols - 8)
+  to <- ncols
+
+  granger <- grangertest(
+    x=c(prediction),
+    y=unlist(df.train[row, from:to])
+  )
 }
